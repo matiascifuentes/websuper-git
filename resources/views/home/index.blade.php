@@ -20,6 +20,7 @@
 		</div>
 		@endforeach
 	</div>
+	{!!$productos->render()!!}
 </div>
 
 @endsection

@@ -22,6 +22,14 @@ class CreateRepartidoresTable extends Migration
             $tabla->string('fecha_ingreso');
             $tabla->string('situacion');
             $tabla->string('disponibilidad');
+
+            //  Datos para la cuenta de usuario.
+            $tabla->string('name');
+            $tabla->string('email')->unique();
+            $tabla->string('password');
+            $tabla->string('tipo');
+            $tabla->rememberToken();
+
             
             $tabla->timestamps(); //Fecha de creacion y de ultima modificacion.
         });

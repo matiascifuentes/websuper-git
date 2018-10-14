@@ -72,6 +72,9 @@ Auth::routes();
 Route::get('/loginBloqueado',function(){
 		return view ('auth.loginBloqueado');
 	});
+Route::get('repartidores/login','RepartidorLoginController@showLoginForm');
+Route::post('repartidores/login','RepartidorLoginController@login');
+Route::get('repartidores/logout', 'RepartidorLoginController@logout');
 //--------------------------------------------------------
 
 //Rutas carro de compras-------------------------------------------------------------------------------
@@ -128,3 +131,5 @@ Route::get('top',[
 	'as'=>'top-product',
 	'uses'=>'TopController@showTop'
 ]);
+
+Route::resource('repartidor','Repartidor\HomeRepartidorController');
