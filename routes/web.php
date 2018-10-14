@@ -75,6 +75,9 @@ Route::get('/loginBloqueado',function(){
 Route::get('repartidores/login','RepartidorLoginController@showLoginForm');
 Route::post('repartidores/login','RepartidorLoginController@login');
 Route::get('repartidores/logout', 'RepartidorLoginController@logout');
+Route::get('/repartidores/loginBloqueado',function(){
+		return view ('repartidores.loginBloqueado');
+	});
 //--------------------------------------------------------
 
 //Rutas carro de compras-------------------------------------------------------------------------------

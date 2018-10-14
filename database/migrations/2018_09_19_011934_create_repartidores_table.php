@@ -15,10 +15,8 @@ class CreateRepartidoresTable extends Migration
     {
         Schema::create('repartidores', function (Blueprint $tabla) {
             $tabla->increments('id');
-            $tabla->string('nombre');
             $tabla->integer('edad');
             $tabla->string('direccion');
-            $tabla->text('correo');
             $tabla->string('fecha_ingreso');
             $tabla->string('situacion');
             $tabla->string('disponibilidad');

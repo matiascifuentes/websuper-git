@@ -48,7 +48,7 @@
 									</div>
 									<div class="col-xs-6 col-sm-6 col-md-6">
 										<div class="form-group">
-											<select class="form-control" name="supermercado" id="supermercado" value="Supermercado 1">
+											<select class="form-control" name="supermercado" id="supermercado" value="Lider">
 					   							<option value="Lider">Lider</option>
 					                         	<option value="Jumbo">Jumbo</option>
 					                      </select>

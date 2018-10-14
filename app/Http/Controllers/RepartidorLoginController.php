@@ -25,7 +25,15 @@ class RepartidorLoginController extends Controller
     public function authenticated()
     {
     	//	Luego de autenticar al usuario se le redirige a su vista.
-    	return redirect('/repartidor');
+        if(Auth::guard('repartidores')->user()->situacion == 'Inactivo'){
+            //  Si el repartidor está bloqueado por el administrador no se le permite acceder.
+            Auth::guard('repartidores')->logout();
+            return redirect('/repartidores/loginBloqueado');
+        }
+        else
+        {
+            return redirect('/repartidor');
+        }
     }
 
     public function logout () {

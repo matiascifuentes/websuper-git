@@ -38,10 +38,10 @@
               @foreach($repartidores as $repartidor)  
 	              <tr>
                 	<td>{{$repartidor->id}}</td>
-                  <td>{{$repartidor->nombre}}</td>
+                  <td>{{$repartidor->name}}</td>
                   <td>{{$repartidor->edad}}</td>
                   <td>{{$repartidor->direccion}}</td>
-                  <td>{{$repartidor->correo}}</td>
+                  <td>{{$repartidor->email}}</td>
                   <td>{{$repartidor->fecha_ingreso}}</td>
                   <td>{{$repartidor->situacion}}</td>
                   <td>{{$repartidor->disponibilidad}}</td>

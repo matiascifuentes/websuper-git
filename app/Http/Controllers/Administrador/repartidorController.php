@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
+use Illuminate\Support\Facades\Hash;
+
 use App\repartidor;
 use App\Historial;
 
@@ -17,7 +19,7 @@ class repartidorController extends Controller
      */
     public function index()
     {
-         $repartidor = repartidor::orderBy('id','ASC')->paginate();
+        $repartidor = repartidor::orderBy('id','ASC')->paginate();
         return view('administrador/repartidores.index',["repartidores"=>$repartidor]);
   //
     }
@@ -42,28 +44,36 @@ class repartidorController extends Controller
     public function store(Request $request)
     {
         $repartidor = new repartidor;
-        $repartidor->nombre = $request->input('nombre');
+        $repartidor->name = $request->input('name');
         $repartidor->edad = $request->input('edad');
         $repartidor->direccion = $request->input('direccion');
-        $repartidor->correo = $request->input('correo');
+  
         $repartidor->fecha_ingreso = $request->input('fecha_ingreso');
         $repartidor->situacion = $request->input('situacion');
         $repartidor->disponibilidad = $request->input('disponibilidad');
 
+        
+        $repartidor->email = $request->input('email');
+        $repartidor->password = Hash::make($request->input('password'));
+        $repartidor->tipo = 'repartidor';
+
         $messages = [
-            'nombre.required' => 'Agrega el nombre del repartidor.',
             'edad.required' => 'Agrega La edad del repartidor.',
             'edad.min' => 'La edad debe ser mayor o igual a 18',
             'edad.numeric' => 'La edad debe ser un valor numérico',
             'edad.integer' => 'La edad debe ser un número entero',
             'direccion.required' => 'Agrega la direccion del repartidor.',
-            'correo.required' => 'Agrega El correo del repartidor.',
             'fecha_ingreso.required' => 'Agrega la fecha de ingreso.',
             'situacion.required' => 'Agrega la situacion del repartidor.',
             'disponibilidad.required' => 'Agrega la disponibilidad del repartidor.',
+            'email.required' => 'Debe ingresar un e-mail',
+            'email.unique' => 'El e-mail ya está en uso por otro usuario',
+            'password.min' => 'La contraseña debe tener mínimo 6 caracteres',
+            'password.confirmed' => 'La contraseña no coincide con la confirmación'
             
         ];
-        $this->validate($request,[ 'nombre'=>'required', 'edad'=>'required|numeric|integer|min:18', 'direccion'=>'required', 'correo'=>'required', 'fecha_ingreso'=>'required', 'situacion'=>'required', 'disponibilidad'=>'required'],$messages);
+        $this->validate($request,['edad'=>'required|numeric|integer|min:18', 'direccion'=>'required', 'fecha_ingreso'=>'required', 'situacion'=>'required', 'disponibilidad'=>'required','email' => 'required|string|email|max:255|unique:repartidores',
+            'password' => 'required|string|min:6|confirmed',],$messages);
         
         $repartidor->save();
         return redirect()->route('repartidores.index')->with('success','Registro creado satisfactoriamente');
@@ -106,28 +116,25 @@ class repartidorController extends Controller
     public function update(Request $request, $id)
     {
         $repartidor = repartidor::find($id);
-        $repartidor->nombre = $request->input('nombre');
+        $repartidor->name = $request->input('name');
         $repartidor->edad = $request->input('edad');
         $repartidor->direccion = $request->input('direccion');
-        $repartidor->correo = $request->input('correo');
         $repartidor->fecha_ingreso = $request->input('fecha_ingreso');
         $repartidor->situacion = $request->input('situacion');
-        $repartidor->disponibilidad = $request->input('disponibilidad');
 
         $messages = [
-            'nombre.required' => 'Agrega el nombre del repartidor.',
             'edad.required' => 'Agrega La edad del repartidor.',
             'edad.min' => 'La edad debe ser mayor o igual a 18',
             'edad.numeric' => 'La edad debe ser un valor numérico',
             'edad.integer' => 'La edad debe ser un número entero',
             'direccion.required' => 'Agrega la direccion del repartidor.',
-            'correo.required' => 'Agrega El correo del repartidor.',
             'fecha_ingreso.required' => 'Agrega la fecha de ingreso.',
             'situacion.required' => 'Agrega la situacion del repartidor.',
-            'disponibilidad.required' => 'Agrega la disponibilidad del repartidor.',
+            'email.required' => 'Debe ingresar un e-mail',
+            'email.unique' => 'El e-mail ya está en uso por otro usuario',
             
         ];
-        $this->validate($request,[ 'nombre'=>'required', 'edad'=>'required|numeric|integer|min:18', 'direccion'=>'required', 'correo'=>'required', 'fecha_ingreso'=>'required', 'situacion'=>'required', 'disponibilidad'=>'required'],$messages);
+        $this->validate($request,[ 'name'=>'required', 'edad'=>'required|numeric|integer|min:18', 'direccion'=>'required', 'fecha_ingreso'=>'required', 'situacion'=>'required'],$messages);
         
         $repartidor->save();
         return redirect()->route('repartidores.index')->with('success','Registro actualizado satisfactoriamente');
