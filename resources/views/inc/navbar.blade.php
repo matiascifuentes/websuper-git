@@ -39,6 +39,19 @@
               <a class="navbar-brand main-title" href="{{ url('/repartidor') }}">SuperWeb</a>
             </div>
             <ul class="nav navbar-nav">
+              @if(Auth::guard('repartidores')->user()->disponibilidad == "Disponible")
+                <span class="label label-success">
+                  <i class="glyphicon glyphicon-ok-circle"></i>
+                  DISPONIBLE
+                </span>
+              @else
+                <span class="label label-default">
+                  <i class="glyphicon glyphicon-ban-circle"></i>
+                  NO DISPONIBLE
+                </span>
+              @endif
+            </ul>
+            <ul class="nav navbar-nav">
               <li><a>Bienvenido: {{Auth::guard('repartidores')->user()->email}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

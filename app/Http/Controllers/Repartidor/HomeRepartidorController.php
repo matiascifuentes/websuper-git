@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
+use App\repartidor;
+
 class HomeRepartidorController extends Controller
 {
     /**
@@ -72,6 +74,12 @@ class HomeRepartidorController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $repartidor = repartidor::find($id);
+    
+        $repartidor->disponibilidad = $request->input('disponibilidad');
+
+        $repartidor->save();
+        return redirect()->route('repartidor.index');
     }
 
     /**
