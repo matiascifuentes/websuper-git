@@ -13,6 +13,7 @@
   <a href="{{route('canastas.index')}}" class="btn btn-primary">Canastas</a>
   <a href="{{route('repartidores.index')}}" class="btn btn-primary">Repartidores</a>
   <a href="{{route('usuarios.index')}}" class="btn btn-primary">Clientes</a>
+  <a href="{{route('entrega.index')}}" class="btn btn-primary">Entregas</a>
 </div>
 <hr>
 

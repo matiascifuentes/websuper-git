@@ -30,6 +30,9 @@ Route::group(['namespace' => 'Administrador', 'middleware' => ['auth'], 'prefix'
 	//Ruta para CRUD repartidores
 
 	Route::resource('repartidores','repartidorController');
+	//Ruta para Pedidos en curso
+	Route::resource('entrega','EntregaController');
+	
 	// Rutas para CRUD de canastas
 	Route::get('canastas/search',[
 		'as' => 'canastas-buscador',

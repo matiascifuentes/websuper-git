@@ -17,6 +17,7 @@
             <li><a href="{{route('prodCanasta-show')}}">Carro canasta</a></li>
             <li><a href="{{route('repartidores.index')}}">Repartidores</a></li>
             <li><a href="{{route('usuarios.index')}}">Clientes</a></li>
+            <li><a href="{{route('entrega.index')}}">Entregas</a></li>
         @endif
         @if(auth()->user()->tipo == 'cliente')
           <div class="navbar-header">
