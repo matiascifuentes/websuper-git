@@ -18,6 +18,14 @@
             <li><a href="{{route('repartidores.index')}}">Repartidores</a></li>
             <li><a href="{{route('usuarios.index')}}">Clientes</a></li>
             <li><a href="{{route('entrega.index')}}">Entregas</a></li>
+
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Informes</a>
+              <ul class="dropdown-menu">
+                <li><a href="{{url('/administrador/dynamic_pdf')}}">Informe Diario</a></li>
+                <li><a href="">Informe Mensual</a></li>
+              </ul>
+            </li>
         @endif
         @if(auth()->user()->tipo == 'cliente')
           <div class="navbar-header">

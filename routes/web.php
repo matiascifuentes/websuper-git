@@ -21,6 +21,12 @@ Route::group(['namespace' => 'Administrador', 'middleware' => ['auth'], 'prefix'
 	Route::get('/home',function(){
 		return view ('administrador.home');
 	});
+
+	//Generar PDF
+	Route::get('dynamic_pdf', 'DynamicPDFController@index');
+
+	Route::get('dynamic_pdf/pdf', 'DynamicPDFController@pdf');
+
 	// Ruta para CRUD de productos
 	Route::resource('productos','ProductosController');
 
