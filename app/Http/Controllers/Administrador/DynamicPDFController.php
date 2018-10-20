@@ -29,7 +29,7 @@ class DynamicPDFController extends Controller
     {
       $date = Carbon::now();
       $currentDate = $date->format('Y-m-d');
-    $total_pedidos = DB::table('pedidos')->select(DB::raw('COUNT(*) as ventas_cant'))->whereRaw('DATE("created_at") = ?',[$currentDate])->get();
+    $total_pedidos = DB::table('pedidos')->select(DB::raw('COUNT(*) as ventas_cant'))->whereRaw('DATE("created_at") = ?',[$currentDate])->first();
      return $total_pedidos;
     }
 
@@ -37,7 +37,7 @@ class DynamicPDFController extends Controller
     {
       $date = Carbon::now();
       $currentDate = $date->format('Y-m-d');
-     $total_pedidos = DB::table('pedidos')->select(DB::raw('SUM(subtotal) as ventas_total'))->whereRaw('DATE("created_at") = ?',[$currentDate])->get();
+     $total_pedidos = DB::table('pedidos')->select(DB::raw('SUM(subtotal) as ventas_total'))->whereRaw('DATE("created_at") = ?',[$currentDate])->first();
      return $total_pedidos;
     }
 
@@ -60,7 +60,7 @@ class DynamicPDFController extends Controller
      <table width="50%" align="center" style="border-collapse: collapse; border: 0px;">
       <tr>
     <th style="border: 1px solid; padding:12px;" width="20%">Id Venta</th>
-    <th style="border: 1px solid; padding:12px;" width="30%">Total</th>
+    <th style="border: 1px solid; padding:12px;" width="30%">Total ($CLP)</th>
    </tr>';  
      foreach($pedido_data as $pedido)
      {
@@ -72,8 +72,8 @@ class DynamicPDFController extends Controller
       ';
      }
      $output .= '</table>
-     <h3 align="center">Cantidad de ventas diarias: '.$pedido_c.'</h3>
-     <h3 align="center">Total de ventas diarias: '.$pedido_t.'</h3>';
+     <h3 align="center">Cantidad de ventas diarias: '.$pedido_c->ventas_cant.'</h3>
+     <h3 align="center">Total de ventas diarias: $'.$pedido_t->ventas_total.'</h3>';
      return $output;
     }
 }
