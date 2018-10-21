@@ -177,14 +177,14 @@ class PaypalController extends Controller
 
         $pedido = Pedido::create([
             'subtotal' => $subtotal,
-            'user_id' => \Auth::user()->id
-        ]);
+            'user_id' => \Auth::user()->id 
+        ]);                                 //Crea una insercion en la tabla pedido
 
         foreach($cart as $producto){
-            $this->saveDetallePedido($producto,$pedido->id);
+            $this->saveDetallePedido($producto,$pedido->id); //Llamada a funcion para insertar en  tabla detalle_pedido
         }
 
-        $this->crearEntrega($pedido->id);
+        $this->crearEntrega($pedido->id); //Crear una nueva entrega para un pedido
     }
 
     protected function saveDetallePedido($producto,$pedido_id)
@@ -194,19 +194,24 @@ class PaypalController extends Controller
             'cantidad'=> $producto->cantidad,
             'product_id' => $producto->id,
             'pedido_id' => $pedido_id
-        ]);
+        ]); //Incerta en tabla detalle_pedido
     }
 
     protected function crearEntrega($pedido_id)
     {
-        $repartidor = DB::select('SELECT repartidor_id AS id, count(*) AS cant_vent
-                                  FROM entrega
-                                  WHERE created_at > CURRENT_DATE  
-                                  GROUP BY repartidor_id 
-                                  ORDER BY cant_vent ASC LIMIT 1;');
+
+        //Selecio de la mejor opcion entre los repartidores para realizar el pedido, este es aquel que ha hecho menos entregas en el dia y que se encuentra disponible.
+        $repartidor = DB::select("SELECT e.repartidor_id as id, COUNT(*) AS cant_vent 
+                                    FROM entrega e 
+                                    INNER JOIN repartidores r ON e.repartidor_id = r.id 
+                                    WHERE (e.created_at > current_date) 
+                                           AND (r.disponibilidad = 'Disponible') 
+                                    GROUP BY e.repartidor_id 
+                                    ORDER BY cant_vent ASC 
+                                    LIMIT 1;"); 
         
         foreach($repartidor as $repa){
-            $this->saveEntrega($pedido_id,$repa->id);
+            $this->saveEntrega($pedido_id,$repa->id); //Llamada para insertar en la tabla entrega
         }
 
     }
@@ -217,7 +222,7 @@ class PaypalController extends Controller
         $entrega->pedido_id = $pedido_id;
         $entrega->repartidor_id = $repart_id;
         $entrega->estado = 'Activo';
-        $entrega->save();    
+        $entrega->save(); //sentencia que realiza la insercion en la tabla entrega.    
                              
     }
 }
