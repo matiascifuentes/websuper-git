@@ -9,6 +9,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Entrega extends Authenticatable
 {
     //
-    use Notifiable;
     protected $table = 'entrega';
+    protected $fillable = ['pedido_id','repartidor_id'];
 }

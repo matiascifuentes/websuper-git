@@ -20,7 +20,7 @@ class EntregaController extends Controller
     public function index()
     {
         //
-        $entrega = entrega::where('estado','activo')->paginate();
+        $entrega = entrega::where('estado','Activo')->paginate();
         return view('administrador/entregas.index',["entregas"=>$entrega]);
     }
 

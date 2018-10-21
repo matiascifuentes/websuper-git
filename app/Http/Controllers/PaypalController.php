@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Input;
 
 use App\Pedido;
 use App\Detalle_pedido; 
+use App\Entrega;
+use DB;
 
 
 class PaypalController extends Controller
@@ -181,6 +183,8 @@ class PaypalController extends Controller
         foreach($cart as $producto){
             $this->saveDetallePedido($producto,$pedido->id);
         }
+
+        $this->crearEntrega($pedido->id);
     }
 
     protected function saveDetallePedido($producto,$pedido_id)
@@ -191,5 +195,29 @@ class PaypalController extends Controller
             'product_id' => $producto->id,
             'pedido_id' => $pedido_id
         ]);
+    }
+
+    protected function crearEntrega($pedido_id)
+    {
+        $repartidor = DB::select('SELECT repartidor_id AS id, count(*) AS cant_vent
+                                  FROM entrega
+                                  WHERE created_at > CURRENT_DATE  
+                                  GROUP BY repartidor_id 
+                                  ORDER BY cant_vent ASC LIMIT 1;');
+        
+        foreach($repartidor as $repa){
+            $this->saveEntrega($pedido_id,$repa->id);
+        }
+
+    }
+
+    protected function saveEntrega($pedido_id,$repart_id)
+    {
+        $entrega = new Entrega;
+        $entrega->pedido_id = $pedido_id;
+        $entrega->repartidor_id = $repart_id;
+        $entrega->estado = 'Activo';
+        $entrega->save();    
+                             
     }
 }
