@@ -194,22 +194,34 @@ class PaypalController extends Controller
             'cantidad'=> $producto->cantidad,
             'product_id' => $producto->id,
             'pedido_id' => $pedido_id
-        ]); //Incerta en tabla detalle_pedido
+        ]); //Inserta en tabla detalle_pedido
     }
 
     protected function crearEntrega($pedido_id)
     {
 
-        //Selecio de la mejor opcion entre los repartidores para realizar el pedido, este es aquel que ha hecho menos entregas en el dia y que se encuentra disponible.
-        $repartidor = DB::select("SELECT e.repartidor_id as id, COUNT(*) AS cant_vent 
-                                    FROM entrega e 
-                                    INNER JOIN repartidores r ON e.repartidor_id = r.id 
-                                    WHERE (e.created_at > current_date) 
-                                           AND (r.disponibilidad = 'Disponible') 
-                                    GROUP BY e.repartidor_id 
-                                    ORDER BY cant_vent ASC 
-                                    LIMIT 1;"); 
-        
+        //Seleccion del repartidor que recien comienza a repartir en el dia.
+        $repartidor = DB::select("SELECT r.id AS id 
+                                    FROM repartidores r 
+                                    FULL JOIN entrega e on r.id = e.repartidor_id 
+                                    WHERE (e.repartidor_id is null) 
+                                            AND (r.disponibilidad = 'Disponible')
+                                            AND (e.created_at > current_date)
+                                    ORDER BY id
+                                    LIMIT 1;");
+
+        //Evaluar si todos los repartidores del dia ya han comenzado
+        if(!$repartidor){
+             //Selecion de la mejor opcion entre los repartidores para realizar el pedido, este es aquel que ha hecho menos entregas en el dia y que se encuentra disponible.
+            $repartidor = DB::select("SELECT e.repartidor_id AS id, COUNT(*) AS cant_vent 
+                                        FROM entrega e 
+                                        INNER JOIN repartidores r ON e.repartidor_id = r.id 
+                                        WHERE (e.created_at > current_date) 
+                                               AND (r.disponibilidad = 'Disponible') 
+                                        GROUP BY e.repartidor_id 
+                                        ORDER BY cant_vent ASC 
+                                        LIMIT 1;"); 
+        }
         foreach($repartidor as $repa){
             $this->saveEntrega($pedido_id,$repa->id); //Llamada para insertar en la tabla entrega
         }
