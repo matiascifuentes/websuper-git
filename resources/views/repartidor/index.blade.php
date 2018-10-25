@@ -39,10 +39,33 @@
 <br>
 <div class="container text-center">
 	<h1>AREA DE REPARTIDOR</h1>
-	<h3>ESTO ES UNA PRUEBA...</h3>
-	<h6>ID: {{Auth::guard('repartidores')->user()->id}}</h6>
-	<h6>tipo: {{Auth::guard('repartidores')->user()->tipo}}</h6>
-	<h6>tipo: {{Auth::guard('repartidores')->user()->disponibilidad}}</h6>
 </div>
+
+<!-- Script que actualiza la tabla de entregas cada cierto tiempo -->
+<script type="text/javascript">
+	var auto_refresh = setInterval(
+		function(){
+			$('#entregas').load('<?php echo url('repartidor/entregasEnCurso'); ?>').fadeIn("slow");
+		},100);
+</script>
+
+
+<!-- Tabla de entregas en curso -->
+<div class="row">
+	<section class="content">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="pull-left"><h3>Entregas en curso</h3></div>
+					<div id="entregas" class="table-container">
+						<!-- Aqui se ejecuta el script -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+
 
 @endsection

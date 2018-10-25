@@ -144,4 +144,10 @@ Route::get('top',[
 	'uses'=>'TopController@showTop'
 ]);
 
+//	Repartidores
+Route::view('/repartidor/entregasEnCurso','repartidor.entregasEnCurso',[
+	'entregas'=> App\Entrega::all()
+]);
+
 Route::resource('repartidor','Repartidor\HomeRepartidorController');
+
