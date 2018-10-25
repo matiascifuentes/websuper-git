@@ -19,9 +19,7 @@
 					<option value="No disponible" selected="selected">No disponible</option>
 				@else
 					<option value="No disponible">No disponible</option>
-				@endif
-				
-				
+				@endif				
 			</select>
 		</div>
 		</div>
@@ -45,8 +43,8 @@
 <script type="text/javascript">
 	var auto_refresh = setInterval(
 		function(){
-			$('#entregas').load('<?php echo url('repartidor/entregasEnCurso'); ?>').fadeIn("slow");
-		},100);
+			$('#entregas').load('<?php echo url('/repartidor/entregasEnCurso'); ?>').fadeIn("slow");
+		},2000);
 </script>
 
 

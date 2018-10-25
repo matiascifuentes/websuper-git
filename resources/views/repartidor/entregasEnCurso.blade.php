@@ -18,7 +18,7 @@
 			@endforeach 
 		@else
 			<tr>
-				<td colspan="8">¡No hay entregas!</td>
+				<td colspan="8">¡No tienes entregas asignadas!</td>
 			</tr>
 		@endif
 	</tbody>

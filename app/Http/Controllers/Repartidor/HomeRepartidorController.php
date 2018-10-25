@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Repartidor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 
 use App\repartidor;
+use App\Entrega;
 
 class HomeRepartidorController extends Controller
 {
@@ -48,9 +50,13 @@ class HomeRepartidorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         //
+        $id = Auth::guard('repartidores')->user()->id;
+        $entregas = Entrega::where('repartidor_id',$id)->get();
+        return view('/repartidor/entregasEnCurso',["entregas"=>$entregas]);
+
     }
 
     /**

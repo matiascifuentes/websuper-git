@@ -3,6 +3,7 @@
     
     
       @if(Auth::check())
+      <!-- ADMINISTRDOR -->
         @if(auth()->user()->tipo == 'administrador')
         <div class="navbar-header">
           <a class="navbar-brand main-title" href="{{ url('/administrador/home') }}">SuperWeb</a>
@@ -27,6 +28,8 @@
               </ul>
             </li>
         @endif
+
+      <!-- CLIENTE -->
         @if(auth()->user()->tipo == 'cliente')
           <div class="navbar-header">
             <a class="navbar-brand main-title" href="{{ route('home') }}">SuperWeb</a>
@@ -43,6 +46,8 @@
             <li><a href="{{route('logout')}}"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
       @else
         @if(Auth::guard('repartidores')->check())
+
+        <!-- REPARTIDOR -->
           @if(Auth::guard('repartidores')->user()->tipo == 'repartidor')
             <div class="navbar-header">
               <a class="navbar-brand main-title" href="{{ url('/repartidor') }}">SuperWeb</a>
@@ -69,6 +74,7 @@
               <li><a href="{{url('repartidores/logout')}}"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
           @endif
         @else
+        <!-- SIN SESIÓN -->
           <ul class="nav navbar-nav navbar-right">
           <li><a href="{{route('register')}}"><span class="glyphicon glyphicon-user"></span>Registrarse</a></li>
           
@@ -77,8 +83,7 @@
               <span class="glyphicon glyphicon-log-in"> Login</span></a>
             <ul class="dropdown-menu">
               <li><a href="{{route('login')}}">Cliente</a></li>
-              <li><a href="{{url('/repartidores/login')}}">Repartidor</a></li>
-              <li><a href="{{route('login')}}">Administrador</a></li>                        
+              <li><a href="{{url('/repartidores/login')}}">Repartidor</a></li>                        
             </ul>
           </li>
         @endif
