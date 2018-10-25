@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Entrega;
 use App\Historial;
+use App\Detalle_pedido;
 
 class EntregaController extends Controller
 {
@@ -51,9 +52,13 @@ class EntregaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($pedido_id)
     {
         //
+        $detalle_pedidos = Detalle_pedido::where('pedido_id',$pedido_id)
+                            ->join('productos','detalle_pedidos.product_id','=','productos.id')
+                            ->get();
+        return view('administrador/entregas.show',["detalle_pedido"=>$detalle_pedidos]);
     }
 
     /**
