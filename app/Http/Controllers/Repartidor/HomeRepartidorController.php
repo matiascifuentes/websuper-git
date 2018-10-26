@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 use App\repartidor;
 use App\Entrega;
+use App\Historial;
+use App\Detalle_pedido;
+use App\Pedido;
 
 class HomeRepartidorController extends Controller
 {
@@ -19,7 +22,7 @@ class HomeRepartidorController extends Controller
      */
     public function index()
     {
-        //
+        //  Vista de inicio repartidor.
         return view('repartidor.index');
     }
 
@@ -52,9 +55,13 @@ class HomeRepartidorController extends Controller
      */
     public function show()
     {
-        //
+        //  Función para mostrar tabla con entregas en curso.
+
+        //  Obteniendo las entregas asignadas al repartidor.
         $id = Auth::guard('repartidores')->user()->id;
         $entregas = Entrega::where('repartidor_id',$id)->get();
+
+        //  Enviando los datos a la tabla.
         return view('/repartidor/entregasEnCurso',["entregas"=>$entregas]);
 
     }
@@ -79,11 +86,13 @@ class HomeRepartidorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $repartidor = repartidor::find($id);
-    
-        $repartidor->disponibilidad = $request->input('disponibilidad');
+        //  Función para actualizar la disponibilidad del repartidor.
 
+        //  Obteniendo la disponibilidad actual.
+        $repartidor = repartidor::find($id);
+        //  Reemplazando con la nueva disponibilidad.
+        $repartidor->disponibilidad = $request->input('disponibilidad');
+        //  Guardar los cambios.
         $repartidor->save();
         return redirect()->route('repartidor.index');
     }
@@ -97,5 +106,18 @@ class HomeRepartidorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showPedido($pedido_id)
+    {
+        //
+        $detalle_pedido = Detalle_pedido::where('pedido_id',$pedido_id)
+                            ->join('productos','detalle_pedidos.product_id','=','productos.id')
+                            ->get();
+
+        $total = Pedido::where('id',$pedido_id)->select('subtotal')->first();
+        $total = $total->subtotal;
+
+        return view('repartidor.detalleEntrega',["detalle_pedido"=>$detalle_pedido , "total"=>$total]);
     }
 }

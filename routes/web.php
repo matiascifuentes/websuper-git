@@ -148,3 +148,8 @@ Route::get('top',[
 
 Route::resource('repartidor','Repartidor\HomeRepartidorController');
 
+Route::get('/detalleEntrega/{id_pedido}',[
+	'as' => 'detalleEntrega-show',
+	'uses' => 'Repartidor\HomeRepartidorController@showPedido'
+]);
+

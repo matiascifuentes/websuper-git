@@ -69,8 +69,8 @@
               <li><a>Bienvenido: {{Auth::guard('repartidores')->user()->email}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="#">Entregas</a></li>
-              <li class="active"><a href="#">Mi Perfil</a></li>
+              <li><a href="#">Entregas</a></li>
+              <li><a href="#">Mi Perfil</a></li>
               <li><a href="{{url('repartidores/logout')}}"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
           @endif
         @else
