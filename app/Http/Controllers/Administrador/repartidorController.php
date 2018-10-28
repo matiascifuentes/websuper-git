@@ -121,6 +121,9 @@ class repartidorController extends Controller
         $repartidor->direccion = $request->input('direccion');
         $repartidor->fecha_ingreso = $request->input('fecha_ingreso');
         $repartidor->situacion = $request->input('situacion');
+        if ($repartidor->situacion == "Inactivo") {
+            $repartidor->disponibilidad = "No disponible";
+        }
 
         $messages = [
             'edad.required' => 'Agrega La edad del repartidor.',
