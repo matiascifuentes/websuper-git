@@ -34,6 +34,11 @@ Route::group(['namespace' => 'Administrador', 'middleware' => ['auth'], 'prefix'
 	Route::resource('usuarios','AdminUserController');
 
 	//Ruta para CRUD repartidores
+	Route::get('get-ip-details', function () {
+			$ip = '66.102.0.0';
+    	$data = \Location::get($ip);
+    	dd($data);
+	});
 
 	Route::resource('repartidores','repartidorController');
 	//Ruta para Pedidos en curso

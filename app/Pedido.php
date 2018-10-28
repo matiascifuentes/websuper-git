@@ -8,6 +8,6 @@ class Pedido extends Model
 {
     protected $table =  'pedidos';
 
-    protected $fillable = ['subtotal','user_id','estado'];
+    protected $fillable = ['subtotal','user_id','ip'];
 }
   

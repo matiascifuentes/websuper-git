@@ -19,12 +19,10 @@ class CreateEntregaTable extends Migration
             $table->foreign('pedido_id')
                 ->references('id')
                 ->on('pedidos')
-                ->onDelete('cascade');
             $table->integer('repartidor_id')->unsigned();
             $table->foreign('repartidor_id')
                 ->references('id')
                 ->on('repartidores')
-                ->onDelete('cascade');
             $table->string('estado');
             $table->timestamps(); //Fecha de creacion y de ultima modificacion.
         });

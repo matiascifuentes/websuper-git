@@ -174,10 +174,30 @@ class PaypalController extends Controller
         foreach($cart as $producto){
             $subtotal += $producto->precio * $producto->cantidad;
         }
+        // Intentamos primero saber si se ha utilizado un proxy para acceder a la página,
+        // y si éste ha indicado en alguna cabecera la IP real del usuario.
+        if (getenv('HTTP_CLIENT_IP')) {
+          $ip = getenv('HTTP_CLIENT_IP');
+        } elseif (getenv('HTTP_X_FORWARDED_FOR')) {
+          $ip = getenv('HTTP_X_FORWARDED_FOR');
+        } elseif (getenv('HTTP_X_FORWARDED')) {
+          $ip = getenv('HTTP_X_FORWARDED');
+        } elseif (getenv('HTTP_FORWARDED_FOR')) {
+          $ip = getenv('HTTP_FORWARDED_FOR');
+        } elseif (getenv('HTTP_FORWARDED')) {
+          $ip = getenv('HTTP_FORWARDED');
+        } else {
+          // Método por defecto de obtener la IP del usuario
+          // Si se utiliza un proxy, esto nos daría la IP del proxy
+          // y no la IP real del usuario.
+          $ip = $_SERVER['REMOTE_ADDR'];
+        }
+
 
         $pedido = Pedido::create([
             'subtotal' => $subtotal,
-            'user_id' => \Auth::user()->id 
+            'user_id' => \Auth::user()->id,
+            'ip' => $ip
         ]);                                 //Crea una insercion en la tabla pedido
 
         foreach($cart as $producto){
@@ -206,7 +226,6 @@ class PaypalController extends Controller
                                     FULL JOIN entrega e on r.id = e.repartidor_id 
                                     WHERE (e.repartidor_id is null) 
                                             AND (r.disponibilidad = 'Disponible')
-                                            AND (e.created_at > current_date)
                                     ORDER BY id
                                     LIMIT 1;");
 
@@ -216,8 +235,7 @@ class PaypalController extends Controller
             $repartidor = DB::select("SELECT e.repartidor_id AS id, COUNT(*) AS cant_vent 
                                         FROM entrega e 
                                         INNER JOIN repartidores r ON e.repartidor_id = r.id 
-                                        WHERE (e.created_at > current_date) 
-                                               AND (r.disponibilidad = 'Disponible') 
+                                        WHERE (r.disponibilidad = 'Disponible') 
                                         GROUP BY e.repartidor_id 
                                         ORDER BY cant_vent ASC 
                                         LIMIT 1;"); 
@@ -234,7 +252,47 @@ class PaypalController extends Controller
         $entrega->pedido_id = $pedido_id;
         $entrega->repartidor_id = $repart_id;
         $entrega->estado = 'Activo';
-        $entrega->save(); //sentencia que realiza la insercion en la tabla entrega.    
+        $entrega->save();  //sentencia que realiza la insercion en la tabla entrega.        
                              
+    }
+    protected function getClientIps()
+    {
+        $clientIps = array();
+        $ip = $this->server->get('REMOTE_ADDR');
+        if (!$this->isFromTrustedProxy()) {
+            return array($ip);
+        }
+        if (self::$trustedHeaders[self::HEADER_FORWARDED] && $this->headers->has(self::$trustedHeaders[self::HEADER_FORWARDED])) {
+            $forwardedHeader = $this->headers->get(self::$trustedHeaders[self::HEADER_FORWARDED]);
+            preg_match_all('{(for)=("?\[?)([a-z0-9\.:_\-/]*)}', $forwardedHeader, $matches);
+            $clientIps = $matches[3];
+        } elseif (self::$trustedHeaders[self::HEADER_CLIENT_IP] && $this->headers->has(self::$trustedHeaders[self::HEADER_CLIENT_IP])) {
+            $clientIps = array_map('trim', explode(',', $this->headers->get(self::$trustedHeaders[self::HEADER_CLIENT_IP])));
+        }
+        $clientIps[] = $ip; // Complete the IP chain with the IP the request actually came from
+        $ip = $clientIps[0]; // Fallback to this when the client IP falls into the range of trusted proxies
+        foreach ($clientIps as $key => $clientIp) {
+            // Remove port (unfortunately, it does happen)
+            if (preg_match('{((?:\d+\.){3}\d+)\:\d+}', $clientIp, $match)) {
+                $clientIps[$key] = $clientIp = $match[1];
+            }
+            if (IpUtils::checkIp($clientIp, self::$trustedProxies)) {
+                unset($clientIps[$key]);
+            }
+        }
+        // Now the IP chain contains only untrusted proxies and the client IP
+        return $clientIps ? array_reverse($clientIps) : array($ip);
+    }
+    public function getIp(){
+        foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
+            if (array_key_exists($key, $_SERVER) === true){
+                foreach (explode(',', $_SERVER[$key]) as $ip){
+                    $ip = trim($ip); // just to be safe
+                    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
+                        return $ip;
+                    }
+                }
+            }
+        }
     }
 }

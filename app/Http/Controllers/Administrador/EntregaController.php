@@ -21,8 +21,14 @@ class EntregaController extends Controller
     public function index()
     {
         //
-        $entrega = entrega::where('estado','Activo')->paginate();
-        return view('administrador/entregas.index',["entregas"=>$entrega]);
+        $entrega = entrega::where('estado','Activo')
+                        ->join('pedidos','entrega.pedido_id','=','pedidos.id')
+                        ->get();
+        $ip='181.42.29.24';
+        //$arr_ip = geoip()->getLocation('192.168.8.105');
+        $data = \Location::get($ip);
+        //return dd($data);
+        return view('administrador/entregas.index',["entregas"=>$entrega, "datas"=>$data]);
     }
 
     /**

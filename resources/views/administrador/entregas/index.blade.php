@@ -22,6 +22,7 @@
                 <th>Pedido</th>
                 <th>Id_Repartidor</th>
                 <th>Estado</th>
+                <th>ip</th>
               </thead>
               <tbody>
               @if($entregas->count())  
@@ -32,6 +33,7 @@
                   <td>{{$entrega->pedido_id}}</td>
                   <td>{{$entrega->repartidor_id}}</td>
                   <td>{{$entrega->estado}}</td>
+                  <td>{{$entrega->ip}}</td>
 
 	               
 	              </tr>
@@ -43,7 +45,6 @@
                 @endif
               </tbody>
             </table>
-            {!!$entregas->render()!!}
           </div>
         </div>
       </div>
