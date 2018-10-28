@@ -18,6 +18,7 @@ class ProductosController extends Controller
      */
     public function index()
     {
+        //  Enviando todos los productos al CRUD de productos.
         $productos = Product::orderBy('id','ASC')->paginate();
         return view('administrador/productos.index',["productos"=>$productos]);
 
@@ -30,6 +31,7 @@ class ProductosController extends Controller
      */
     public function create()
     {
+        //  Vista para crear un nuevo producto.
         return view('administrador/productos.create');
     }
 
@@ -41,8 +43,9 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //  Crear nuevo producto.
         $producto = new Product;
+        //  Obteniendo los datos desde el formulario.
         $producto->titulo = $request->input('nombre');
         $producto->precio = $request->input('precio');
         $producto->categoria = $request->input('categoria');
@@ -51,6 +54,7 @@ class ProductosController extends Controller
         $producto->img = $request->input('img');
         $producto->url = $request->input('url');
 
+        //  Mensajes de error.
         $messages = [
             'nombre.required' => 'Agrega el nombre del producto.',
             'precio.required' => 'Agrega el precio del producto.',
@@ -65,9 +69,10 @@ class ProductosController extends Controller
             
         ];
         
-
+        //  Validando los datos y enviando los mensajes de error respectivos.
         $this->validate($request,[ 'nombre'=>'required', 'precio'=>'required|numeric|integer|min:1', 'categoria'=>'required', 'descripcion'=>'required', 'supermercado'=>'required', 'img'=>'required', 'url'=>'required'],$messages);
         
+        //  Guardando el producto después de validar.
         $producto->save();
         return redirect()->route('productos.index')->with('success','Registro creado satisfactoriamente');
     }
@@ -80,8 +85,9 @@ class ProductosController extends Controller
      */
     public function show($id)
     {
-        //
+        //  Obteniendo los datos del producto.
         $producto = Product::where('id',$id)->first();
+        //  Obteniendo el historial de precios del producto.
         $historial = Historial::where('id_prod',$id)->get(['fecha','precio']);
         return view('administrador/productos.show',["producto"=>$producto,"historial"=>$historial]);
     }
@@ -94,7 +100,7 @@ class ProductosController extends Controller
      */
     public function edit($id)
     {
-        //
+        //  Obteniendo los datos del producto.
         $producto=Product::find($id);
         return view('administrador/productos.edit',["producto"=>$producto]);
     }
@@ -108,8 +114,9 @@ class ProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //  Obteniendo los datos actuales del producto.
         $producto = Product::find($id);
+        //  Reemplazando los datos por los nuevos datos del formulario.
         $producto->titulo = $request->input('nombre');
         $producto->precio = $request->input('precio');
         $producto->categoria = $request->input('categoria');
@@ -118,6 +125,7 @@ class ProductosController extends Controller
         $producto->img = $request->input('img');
         $producto->url = $request->input('url');
 
+        //  Estableciendo los mensajes de error.
         $messages = [
             'nombre.required' => 'Agrega el nombre del producto.',
             'precio.required' => 'Agrega el precio del producto.',
@@ -132,10 +140,10 @@ class ProductosController extends Controller
             
         ];
         
-
+        //  Validando los campos de información.
         $this->validate($request,[ 'nombre'=>'required', 'precio'=>'required|numeric|integer|min:1', 'categoria'=>'required', 'descripcion'=>'required', 'supermercado'=>'required', 'img'=>'required', 'url'=>'required'],$messages);
 
-
+        //  Guardando los nuevos datos después de validar.
         $producto->save();
         return redirect()->route('productos.index')->with('success','Registro actualizado satisfactoriamente');
     }
@@ -148,7 +156,7 @@ class ProductosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //  Eliminando los datos del producto.
         Product::destroy($id);
 
         return redirect()->route('productos.index')->with('success','Registro eliminado satisfactoriamente');

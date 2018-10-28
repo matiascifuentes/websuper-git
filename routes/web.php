@@ -168,6 +168,10 @@ Route::group(['namespace' => 'Repartidor', 'middleware' => ['authRepar']], funct
 		'uses' => 'HomeRepartidorController@showPedido'
 	]);
 
+	Route::get('/updateEntrega/{id_pedido}',[
+		'as' => 'updateEntrega',
+		'uses' => 'HomeRepartidorController@updateEntrega'
+	]);
 });
 //Fin Repartidor-----------------------------------------------------------------------------------------------
 
