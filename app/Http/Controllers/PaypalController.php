@@ -225,7 +225,7 @@ class PaypalController extends Controller
                                     FROM repartidores r 
                                     FULL JOIN entrega e on r.id = e.repartidor_id 
                                     WHERE (e.repartidor_id is null) 
-                                            AND (r.disponibilidad = 'Disponible')
+                                    AND (r.disponibilidad = 'Disponible')
                                     ORDER BY id
                                     LIMIT 1;");
 
@@ -235,7 +235,8 @@ class PaypalController extends Controller
             $repartidor = DB::select("SELECT e.repartidor_id AS id, COUNT(*) AS cant_vent 
                                         FROM entrega e 
                                         INNER JOIN repartidores r ON e.repartidor_id = r.id 
-                                        WHERE (r.disponibilidad = 'Disponible') 
+                                        WHERE (e.created_at > current_date)
+                                        AND (r.disponibilidad = 'Disponible') 
                                         GROUP BY e.repartidor_id 
                                         ORDER BY cant_vent ASC 
                                         LIMIT 1;"); 
