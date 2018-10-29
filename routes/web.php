@@ -84,6 +84,10 @@ Route::group(['namespace' => 'Administrador', 'middleware' => ['authAdmin'], 'pr
 	});
 
 	//Generar PDF
+ 	Route::get('info_mes', 'DynamicPDFController@index_mes');
+
+ 	Route::get('info_mes/pdfmes','DynamicPDFController@pdf_mes');
+
 	Route::get('dynamic_pdf', 'DynamicPDFController@index');
 
 	Route::get('dynamic_pdf/pdf', 'DynamicPDFController@pdf');

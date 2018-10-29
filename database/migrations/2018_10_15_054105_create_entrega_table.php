@@ -18,11 +18,11 @@ class CreateEntregaTable extends Migration
             $table->integer('pedido_id')->unsigned();
             $table->foreign('pedido_id')
                 ->references('id')
-                ->on('pedidos')
+                ->on('pedidos');
             $table->integer('repartidor_id')->unsigned();
             $table->foreign('repartidor_id')
                 ->references('id')
-                ->on('repartidores')
+                ->on('repartidores');
             $table->string('estado');
             $table->timestamps(); //Fecha de creacion y de ultima modificacion.
         });

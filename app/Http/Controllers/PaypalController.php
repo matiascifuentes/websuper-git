@@ -48,7 +48,7 @@ class PaypalController extends Controller
     	$items = array();
     	$subtotal = 0;
     	$cart = \Session::get('cart');
-    	$currency = 'MXN';
+    	$currency = 'USD';
 
     	foreach($cart as $producto){
     		$item = new Item();

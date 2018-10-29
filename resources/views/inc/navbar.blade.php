@@ -24,7 +24,7 @@
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Informes</a>
               <ul class="dropdown-menu">
                 <li><a href="{{url('/administrador/dynamic_pdf')}}">Informe Diario</a></li>
-                <li><a href="">Informe Mensual</a></li>
+                <li><a href="{{url('/administrador/info_mes')}}">Informe Mensual</a></li>
               </ul>
             </li>
         @endif
@@ -69,7 +69,7 @@
               <li><a>Bienvenido: {{Auth::guard('repartidores')->user()->email}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Entregas</a></li>
+              <li><a href="{{ url('/repartidor') }}">Entregas</a></li>
               <li><a href="#">Mi Perfil</a></li>
               <li><a href="{{url('repartidores/logout')}}"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
           @endif
