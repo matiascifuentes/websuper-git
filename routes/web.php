@@ -70,6 +70,12 @@ Route::group(['middleware' => ['authCliente']], function()
 		'uses'=>'TopController@showTop'
 	]);
 
+	//Historial de compras
+	Route::get('hcompras',[
+		'as'=>'h-compras',
+		'uses'=>'TopController@showCompras'
+	]);
+
 });
 
 //Fin Cliente-------------------------------------------------------------------------------------------------
