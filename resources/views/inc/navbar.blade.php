@@ -40,6 +40,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{{ route('cart-show') }}"><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
             <li><a href="{{ route('top-product') }}">Super Top <span class="glyphicon glyphicon-fire"></span></a></li>
+            <li><a href="{{ route('h-compras') }}">Tus compras</a></li>
             <li class="active"><a href="{{route('profile')}}">Mi Perfil</a></li>
           @endif
           

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Detalle_pedido;
+use App\Pedido;
 
 use DB;
 
@@ -27,5 +29,13 @@ class TopController extends Controller
 										detalle_pedidos.product_id
 								ORDER BY totalventas DESC;');
     	return view('home.top', compact('tops'));
+    }
+    public function showCompras()
+    {
+        $id = auth()->user()->id;
+        $pedidos = Pedido::where('user_id',$id)
+                            ->orderBy('created_at','DESC')
+                            ->get();
+        return view('home.hcompras',["userid"=>$id,"pedidos"=>$pedidos]);
     }
 }
