@@ -6,7 +6,7 @@
 		<strong>¡Te encuentras disponible!</strong> Revisa constantemente los pedidos que se te han asignado.
 	</div>
 @else
-	<div class="alert alert-info">
+	<div class="alert alert-warning">
 	  <strong>¡No te encuentras disponible!</strong> No se te asignarán pedidos. Para recibir pedidos cambia tu estado a Disponible.
 	  <br>
 	  <strong>¡Importante!</strong> Si tienes entregas en curso debes entregarlas.
@@ -14,8 +14,66 @@
 @endif			
 
 
+<!--Jumbotron!-->
+<div class="jumbotron">
+ <div class="container">
+ 	 <h1 class="display-4">Bienvenido {{Auth::guard('repartidores')->user()->name}}</h1>
+ 	<p class="lead">En esta pestaña encuentras la visualización de tus pedidos, no olvides atenderlos con prontitud.</p>
+ 	<hr class="my-4">
+	<p>Si necesitas obtener información respecto a los horarios y direcciones de nuestros supermercados asociados presiona el boton información.</p>
+	<p class="lead">
+	  <a class="btn btn-primary btn-lg" href="#" role="button" data-toggle="collapse" data-target="#info">Información</a>
+	</p>
+		<div id="info" class="collapse">
+		    
+
+			<div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">Supermercado Lider</h4>
+			   	</div>
+			    <div class="panel-body">
+					<address>
+					   <strong>Sucursales Lider: <a href="https://www.lider.cl/electrohogar/info/NuestrosLocales">Locales</a></strong><br><br>
+						 
+					  <strong>Horarios de antencion:</strong><br>					  
+					  Lun a Vie de 08:00 a 22:00 hrs <br>
+					  Sáb y Dom 09:00 a 22:00 hrs<br>
+					  <abbr title="Phone">Servicio al Cliente:</abbr> 600 600 9191<br>
+					  <strong>Pagina Web contacto: <a href="https://www.lider.cl/supermercado/contactus/?type=person">Lider.cl</a></strong><br>
+
+					</address>
+
+				</div>
+	  		</div>
+
+			<div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">Supermercado Jumbo</h4>
+			    </div>
+			      <div class="panel-body">
+			      	<address>
+					   <strong>Sucursales Jumbo: <a href="https://nuevo.jumbo.cl/institucional/locales-jumbo">Locales</a></strong><br><br>
+						 
+					  <strong>Horarios de antencion:</strong><br>					  
+					 lunes a domingo de 09:00 a 21:00 horas <br>
+					  <abbr title="Phone">Servicio al Cliente:</abbr> 600 400 3000<br>
+					  <strong>Pagina Web contacto: <a href="https://nuevo.jumbo.cl/institucional/contacto">Jumbo.cl</a></strong><br>
+
+					</address>
+			      </div>
+			  </div>
+
+
+ 		</div>
+	</div>
+</div>
+
+<!-- fin Jumbotron!-->
 
 <div class="row">
+	<div class="container text-center">
+	<h1>Disponibilidad</h1>
+	</div>
 	<section class="content">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="panel panel-default">

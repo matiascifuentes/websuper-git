@@ -10,5 +10,5 @@ class Entrega extends Authenticatable
 {
     //
     protected $table = 'entrega';
-    protected $fillable = ['pedido_id','repartidor_id'];
+    protected $fillable = ['pedido_id','repartidor_id','created_at'];
 }

@@ -4,6 +4,7 @@
 		<th>ID Entrega</th>
 		<th>Pedido</th>
 		<th>Estado</th>
+		<th>Hora pedido</th>
 		<th>Confirmar entrega</th>
 	</thead>
 	<tbody>
@@ -15,6 +16,7 @@
 					<td>
 						{{$entrega->estado}}
 					</td>
+					<td>{{$entrega->created_at}}</td>
 					<td>
 						<a class="btn btn-success" href="{{ route('updateEntrega',$entrega->id) }}" onclick="return confirm ('Confirmar entrega del pedido')">¿Entregado?</a>
 					</td>
