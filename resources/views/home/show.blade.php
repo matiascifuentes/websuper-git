@@ -74,4 +74,4 @@
 ?>
 
 
-@stop
+@endsection

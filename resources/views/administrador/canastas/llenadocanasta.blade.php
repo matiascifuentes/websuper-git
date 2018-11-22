@@ -79,8 +79,9 @@
 			<hr>
 			<p>
 				<a class="btn btn-primary" href="{{route('canastas-buscador')}}">
-					<i class="fa fa-chevron-circle-left"></i> Volver
+					<i class="fa fa-chevron-circle-left"></i> Agregar productos
 				</a>
+
 			</p>
 		@endif
 		

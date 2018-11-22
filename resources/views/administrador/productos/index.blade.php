@@ -7,6 +7,12 @@
   </div>
 @endif
 
+<div>
+  <span class="glyphicon glyphicon-chevron-left"></span>
+  <a class="btn btn-warning" href="{{url('/administrador/home') }}">Volver</a>
+  <hr>
+</div>
+
 <div class="row">
   <section class="content">
     <div class="col-md-8 col-md-offset-2">

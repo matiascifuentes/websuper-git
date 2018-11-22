@@ -7,6 +7,12 @@
   </div>
 @endif
 
+<div>
+  <span class="glyphicon glyphicon-chevron-left"></span>
+  <a class="btn btn-warning" href="{{url('/administrador/home') }}">Volver</a>
+  <hr>
+</div>
+
 <div class="row">
   <section class="content">
     <div class="col-md-8 col-md-offset-2">
@@ -19,16 +25,10 @@
           <div class="table-container">
             <table id="mytable" class="table table-bordred table-striped">
               <thead>
+                <th>Ver</th>
                 <th>Código</th>
                 <th>Nombre</th>
-                <th>Email</th>
-                <th>Región</th>
-                <th>Ciudad</th>
-                <th>Dirección</th>
-                <th>Telefono</th>
                 <th>Estado</th>
-                <th>Fecha creación</th>
-                <th>Ultima sesión</th>
                 <th>Editar</th>
               </thead>
               <tbody>
@@ -36,16 +36,10 @@
               @foreach($usuarios as $usuario)  
                  @if(($usuario->tipo)!='administrador') 
                   <tr>
+                    <td><a class="btn btn-info btn-xs" href="{{route('usuarios.show', $usuario->id)}}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
                     <td>{{$usuario->id}}</td>
                     <td>{{$usuario->name}}</td>
-                    <td>{{$usuario->email}}</td>
-                    <td>{{$usuario->region}}</td>
-                    <td>{{$usuario->city}}</td>
-                    <td>{{$usuario->address}}</td>
-                    <td>{{$usuario->phone}}</td>
                     <td>{{$usuario->tipo}}</td>
-                    <td>{{$usuario->created_at}}</td>
-                    <td>{{$usuario->updated_at}}</td>
                     <td><a class="btn btn-primary btn-xs" href="{{route('usuarios.edit', $usuario->id)}}"><span class="glyphicon glyphicon-pencil"></span></a></td>
                   </tr>
                   @endif

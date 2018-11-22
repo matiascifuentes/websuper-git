@@ -9,24 +9,11 @@
           <a class="navbar-brand main-title" href="{{ url('/administrador/home') }}">SuperWeb</a>
         </div>
           <ul class="nav navbar-nav">
-            <li class="active"><a href="{{url('/administrador/home')}}">Panel</a></li>
             <li><a>Bienvenido: {{auth()->user()->email}}</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{route('productos.index')}}">Productos</a></li>
-            <li><a href="{{route('canastas.index')}}">Canastas</a></li>
-            <li><a href="{{route('prodCanasta-show')}}">Carro canasta</a></li>
-            <li><a href="{{route('repartidores.index')}}">Repartidores</a></li>
-            <li><a href="{{route('usuarios.index')}}">Clientes</a></li>
-            <li><a href="{{route('entrega.index')}}">Entregas</a></li>
-
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Informes</a>
-              <ul class="dropdown-menu">
-                <li><a href="{{url('/administrador/dynamic_pdf')}}">Informe Diario</a></li>
-                <li><a href="{{url('/administrador/info_mes')}}">Informe Mensual</a></li>
-              </ul>
-            </li>
+            <li><a href="{{url('/administrador/home')}}">Panel</a></li>
+            <li><a href="{{route('prodCanasta-show')}}">Carro canasta<span class="glyphicon glyphicon-shopping-cart"></span></a></li>
         @endif
 
       <!-- CLIENTE -->

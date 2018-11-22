@@ -46,6 +46,13 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+     public function show($id)
+    {
+        //  Obteniendo los datos del cliente.
+        $usuario = User::where('id',$id)->first();
+        return view('administrador/adminuser.show',["usuario"=>$usuario]);
+    }
+
     public function edit($id)
     {
         //
