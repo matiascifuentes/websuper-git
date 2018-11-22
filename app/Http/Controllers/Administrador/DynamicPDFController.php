@@ -177,4 +177,90 @@ class DynamicPDFController extends Controller
       return $output;
     }
     //Fin contruccion informe mensual de ventas
+
+
+     //-------------------------------------//
+
+    //Construccion informe reparto mensual
+
+
+    function get_repartidossres() //obtiene los repartidores
+    {
+
+     $repartidores = DB::table('repartidores')->get();
+     return $repartidores;
+    }
+
+    function get_tventas_rep() //numero de ventas mensuales
+    {
+
+     $repartidores = DB::SELECT("SELECT COUNT(*) AS CANTIDAD 
+                                FROM entrega
+                                WHERE EXTRACT(MONTH FROM created_at) = (SELECT EXTRACT(month FROM CURRENT_DATE))
+                                AND repartidor_id = 1");
+     return $repartidores;
+    }
+
+
+    function get_repartidores() //obtiene los repartidores
+    {
+
+     $repartidores = DB::SELECT("SELECT e.repartidor_id AS rep_id, COUNT(repartidor_id) AS cantidad_ventas, r.name AS rep_name, SUM(subtotal) AS total_ventas
+      FROM repartidores r, entrega e, pedidos p
+      WHERE r.id = e.repartidor_id
+      AND e.pedido_id = p.id
+      AND EXTRACT(MONTH FROM e.created_at) = (SELECT EXTRACT(month FROM CURRENT_DATE))
+      GROUP BY e.repartidor_id, r.name");
+
+     return $repartidores;
+    }
+
+    function index_reparto_mes()
+    {
+     $repartidores_data = $this->get_repartidores();
+     $date = Carbon::now();
+     $date = $date->format('F Y');
+     $t_ventas = $this->get_tventas_rep();
+     return view('administrador/info_repart_mes')->with('rep_data', $repartidores_data)->with('date', $date); //Se envian los datos del informe diario a la vista.
+    }
+
+    function pdf_reparto_mes()
+    {
+     $pdf = \App::make('dompdf.wrapper');
+     $pdf->loadHTML($this->convert_repmes_to_html());
+     return $pdf->stream('ventas_diario.pdf');
+    }
+
+    //Constructor de contenido del pdf.
+
+    function convert_repmes_to_html()
+    {
+      $date = Carbon::now();
+      $currentDate = $date->format('m-y');
+      $rep_data = $this->get_repartidores();
+
+     $output = '
+     <h3 align="center">Informe de reparto del mes '.$currentDate.'</h3>
+     <table width="50%" align="center" style="border-collapse: collapse; border: 0px;">
+      <tr>
+    <th style="border: 1px solid; padding:12px;" width="20%">Id</th>
+    <th style="border: 1px solid; padding:12px;" width="30%">Nombre</th>
+    <th style="border: 1px solid; padding:12px;" width="30%">Cantidad repartos</th>
+    <th style="border: 1px solid; padding:12px;" width="30%">Total venta mensual</th>
+   </tr>';  
+     foreach($rep_data as $rep)
+     {
+      $output .= '
+      <tr>
+       <td style="border: 1px solid; padding:12px;">'.$rep->rep_id.'</td>
+       <td style="border: 1px solid; padding:12px;">'.$rep->rep_name.'</td>
+       <td style="border: 1px solid; padding:12px;">'.$rep->cantidad_ventas.'</td>
+       <td style="border: 1px solid; padding:12px;">$'.$rep->total_ventas.'</td>
+      </tr>
+      ';
+     }
+     $output .= '</table>';
+     return $output;
+    }
+
 }

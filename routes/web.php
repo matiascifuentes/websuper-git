@@ -92,6 +92,10 @@ Route::group(['namespace' => 'Administrador', 'middleware' => ['authAdmin'], 'pr
 
 	Route::get('dynamic_pdf/pdf', 'DynamicPDFController@pdf');
 
+	Route::get('info_reparto_mes', 'DynamicPDFController@index_reparto_mes');
+
+	Route::get('info_reparto_mes/pdfmes', 'DynamicPDFController@pdf_reparto_mes');
+
 	// Ruta para CRUD de productos
 	Route::resource('productos','ProductosController');
 

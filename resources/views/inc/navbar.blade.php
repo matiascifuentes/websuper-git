@@ -23,8 +23,9 @@
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Informes</a>
               <ul class="dropdown-menu">
-                <li><a href="{{url('/administrador/dynamic_pdf')}}">Informe Diario</a></li>
-                <li><a href="{{url('/administrador/info_mes')}}">Informe Mensual</a></li>
+                <li><a href="{{url('/administrador/dynamic_pdf')}}">Ventas Diarias</a></li>
+                <li><a href="{{url('/administrador/info_mes')}}">Ventas Mensuales</a></li>
+                <li><a href="{{url('/administrador/info_reparto_mes')}}">Repartos Mensuales</a></li>
               </ul>
             </li>
         @endif
