@@ -150,6 +150,11 @@ Route::group(['namespace' => 'Administrador', 'middleware' => ['authAdmin'], 'pr
 		'as' => 'prodCanasta-update',
 		'uses' => 'LlenadoCanastaController@update'
 	]);
+	//Ruta para historial de pedidos
+	Route::get('hpedidos',[
+		'as' => 'h-pedidos',
+		'uses' => 'EntregaController@hpedidos'
+	]);
 	
 });
 	
