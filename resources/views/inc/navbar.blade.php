@@ -59,6 +59,7 @@
             <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ url('/repartidor') }}">Entregas</a></li>
               <li><a href="#">Mi Perfil</a></li>
+              <li><a href="{{ route('h-entregados') }}">Mis Entregados</a></li>
               <li><a href="{{url('repartidores/logout')}}"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
           @endif
         @else

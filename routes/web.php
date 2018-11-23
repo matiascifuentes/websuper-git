@@ -150,7 +150,7 @@ Route::group(['namespace' => 'Administrador', 'middleware' => ['authAdmin'], 'pr
 		'as' => 'prodCanasta-update',
 		'uses' => 'LlenadoCanastaController@update'
 	]);
-
+	
 });
 	
 //Fin Administrador-----------------------------------------------------------------------------------------
@@ -186,6 +186,12 @@ Route::group(['namespace' => 'Repartidor', 'middleware' => ['authRepar']], funct
 		'as' => 'updateEntrega',
 		'uses' => 'HomeRepartidorController@updateEntrega'
 	]);
+
+	Route::get('entregados',[
+		'as'=>'h-entregados',
+		'uses'=>'HomeRepartidorController@hentregas'
+	]);
+
 });
 //Fin Repartidor-----------------------------------------------------------------------------------------------
 
