@@ -243,6 +243,40 @@ class DynamicPDFController extends Controller
      return $regiones;
     }
 
+    function pdf_region_mes()
+    {
+     $pdf = \App::make('dompdf.wrapper');
+     $pdf->loadHTML($this->convert_region_to_html());
+     return $pdf->stream('ventas_region.pdf');
+    }
+    function convert_region_to_html()
+    {
+      $date = Carbon::now();
+      $currentDate = $date->format('m-y');
+      $region_data = $this->get_region();
+
+     $output = '
+     <h3 align="center">Informe de Conecciones mensuales '.$currentDate.'</h3>
+     <table width="50%" align="center" style="border-collapse: collapse; border: 0px;">
+      <tr>
+    <th style="border: 1px solid; padding:12px;" width="20%">Region</th>
+    <th style="border: 1px solid; padding:12px;" width="30%">Cantidad de conecciones</th>
+    <th style="border: 1px solid; padding:12px;" width="30%">Total Ventas</th>
+   </tr>';  
+     foreach($region_data as $reg)
+     {
+      $output .= '
+      <tr>
+       <td style="border: 1px solid; padding:12px;">'.$reg->region_nom.'</td>
+       <td style="border: 1px solid; padding:12px;">'.$reg->cantidad_pedidos.'</td>
+       <td style="border: 1px solid; padding:12px;">$'.$reg->total_ventas.'</td>
+      </tr>
+      ';
+     }
+     $output .= '</table>';
+     return $output;
+    }
+
     function pdf_reparto_mes()
     {
      $pdf = \App::make('dompdf.wrapper');

@@ -104,6 +104,8 @@ Route::group(['namespace' => 'Administrador', 'middleware' => ['authAdmin'], 'pr
 
 	Route::get('info_conect_mes', 'DynamicPDFController@index_conect_mes');
 
+	Route::get('info_conect_mes/pdfreg', 'DynamicPDFController@pdf_region_mes');
+
 	// Ruta para CRUD de productos
 	Route::resource('productos','ProductosController');
 
