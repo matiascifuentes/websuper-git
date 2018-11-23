@@ -223,6 +223,25 @@ class DynamicPDFController extends Controller
      $t_ventas = $this->get_tventas_rep();
      return view('administrador/info_repart_mes')->with('rep_data', $repartidores_data)->with('date', $date); //Se envian los datos del informe diario a la vista.
     }
+    function index_conect_mes()
+    {
+     $region_data = $this->get_region();
+     $date = Carbon::now();
+     $date = $date->format('F Y');
+     return view('administrador/info_conect_mes')->with('regi_data', $region_data)->with('date', $date); //Se envian los datos del informe diario a la vista.
+    }
+    function get_region() //obtiene las regiones
+    {
+
+     $regiones = DB::SELECT("SELECT u.region AS region_nom, COUNT(region) AS cantidad_pedidos,SUM(subtotal) AS total_ventas
+      FROM entrega e, users u, pedidos p
+      WHERE u.id = p.user_id
+      AND e.pedido_id = p.id
+      AND EXTRACT(MONTH FROM e.created_at) = (SELECT EXTRACT(month FROM CURRENT_DATE))
+      GROUP BY u.region");
+
+     return $regiones;
+    }
 
     function pdf_reparto_mes()
     {
