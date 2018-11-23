@@ -152,7 +152,12 @@ Route::group(['namespace' => 'Administrador', 'middleware' => ['authAdmin'], 'pr
 		'as' => 'prodCanasta-update',
 		'uses' => 'LlenadoCanastaController@update'
 	]);
-
+	//Ruta para historial de pedidos
+	Route::get('hpedidos',[
+		'as' => 'h-pedidos',
+		'uses' => 'EntregaController@hpedidos'
+	]);
+	
 });
 	
 //Fin Administrador-----------------------------------------------------------------------------------------
@@ -188,6 +193,12 @@ Route::group(['namespace' => 'Repartidor', 'middleware' => ['authRepar']], funct
 		'as' => 'updateEntrega',
 		'uses' => 'HomeRepartidorController@updateEntrega'
 	]);
+
+	Route::get('entregados',[
+		'as'=>'h-entregados',
+		'uses'=>'HomeRepartidorController@hentregas'
+	]);
+
 });
 //Fin Repartidor-----------------------------------------------------------------------------------------------
 

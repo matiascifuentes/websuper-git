@@ -139,4 +139,14 @@ class HomeRepartidorController extends Controller
         $entrega->save();
         return redirect()->route('repartidor.index');
     }
+
+    public function hentregas()
+    {
+        $id = Auth::guard('repartidores')->user()->id;
+        $entregas = Entrega::where('repartidor_id',$id)
+                            ->where('estado','Entregado')
+                            ->orderBy('updated_at','DESC')
+                            ->get();
+        return view('repartidor.histentregados',['entregas'=>$entregas]);
+    }
 }

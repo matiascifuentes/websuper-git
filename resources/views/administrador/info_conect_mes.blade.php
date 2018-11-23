@@ -14,9 +14,6 @@
     <div class="col-md-7" align="right">
      <h4>Informe de ventas del mes:  {{ $date }}</h4> 
     </div>
-    <div class="col-md-5" align="right">
-     <a href="{{ url('administrador/info_reparto_mes/pdfmes') }}" class="btn btn-danger">Convertir a PDF</a>
-    </div>
    </div>
    <br />
    <div class="table-responsive">
@@ -24,7 +21,7 @@
      <thead>
       <tr>
        <th>Region</th>
-       <th>Cantidad de ventas</th>
+       <th>Cantidad de conecciones</th>
        <th>Total venta mensual</th>
       </tr>
      </thead>

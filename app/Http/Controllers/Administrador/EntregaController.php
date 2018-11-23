@@ -11,6 +11,8 @@ use App\Entrega;
 use App\Historial;
 use App\Detalle_pedido;
 
+use DB;
+
 class EntregaController extends Controller
 {
     /**
@@ -99,5 +101,20 @@ class EntregaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function hpedidos(){
+
+        $pedidos = DB::select("SELECT entrega.pedido_id, 
+                                repartidores.name, 
+                                entrega.created_at, 
+                                entrega.updated_at 
+                                FROM entrega 
+                                INNER JOIN repartidores 
+                                ON entrega.repartidor_id = repartidores.id 
+                                WHERE entrega.estado  = 'Entregado';");
+
+        return view('administrador.pedidos.hpedidos',["pedidos"=>$pedidos]);
+
     }
 }
