@@ -283,7 +283,7 @@
 							              </div>
 							            </div>
 							          </div>
-							          <a href="#">
+							          <a href="{{url('/administrador/info_reparto_diario')}}">
 							            <div class="panel-footer announcement-bottom">
 							              <div class="row">
 							                <div class="col-xs-6">
@@ -337,35 +337,7 @@
 							            </div>
 							            <div class="row">
 							            	<div class="col-xs-12 text-center">
-							                <p class="announcement-text">Origen de compras</p>
-							              </div>
-							            </div>
-							          </div>
-							          <a href="#">
-							            <div class="panel-footer announcement-bottom">
-							              <div class="row">
-							                <div class="col-xs-6">
-							                 Ir
-							                </div>
-							                <div class="col-xs-6 text-right">
-							                  <i class="fa fa-arrow-circle-right"></i>
-							                </div>
-							              </div>
-							            </div>
-							          </a>
-							        </div>
-								</div>
-								<div class="col-lg-3">
-							        <div class="panel panel-info">
-							          <div class="panel-heading">
-							            <div class="row">
-							              <div class="col-xs-6">
-							                <i class="fa fa-thumb-tack fa-2x"></i>
-							              </div>
-							            </div>
-							            <div class="row">
-							            	<div class="col-xs-12 text-center">
-							                <p class="announcement-text">Conecciones mensuales</p>
+							                <p class="announcement-text">Conexiones mensuales</p>
 							              </div>
 							            </div>
 							          </div>

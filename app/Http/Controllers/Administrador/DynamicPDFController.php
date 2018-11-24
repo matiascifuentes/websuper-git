@@ -215,6 +215,19 @@ class DynamicPDFController extends Controller
      return $repartidores;
     }
 
+     function get_rep_diario()
+    {
+
+     $repartidores = DB::SELECT("SELECT e.repartidor_id AS rep_id, COUNT(repartidor_id) AS cantidad_ventas, r.name AS rep_name, SUM(subtotal) AS total_ventas
+      FROM repartidores r, entrega e, pedidos p
+      WHERE r.id = e.repartidor_id
+      AND e.pedido_id = p.id
+      AND e.created_at >= current_date
+      GROUP BY e.repartidor_id, r.name");
+
+     return $repartidores;
+    }
+
     function index_reparto_mes()
     {
      $repartidores_data = $this->get_repartidores();
@@ -223,6 +236,15 @@ class DynamicPDFController extends Controller
      $t_ventas = $this->get_tventas_rep();
      return view('administrador/info_repart_mes')->with('rep_data', $repartidores_data)->with('date', $date); //Se envian los datos del informe diario a la vista.
     }
+
+    function index_reparto_diario()
+    {
+     $repartidores_data = $this->get_rep_diario();
+     $date = Carbon::now();
+     $date = $date->format('d-m-y');
+     return view('administrador/info_repart_diario')->with('rep_data', $repartidores_data)->with('date', $date); //Se envian los datos del informe diario a la vista.
+    }
+
     function index_conect_mes()
     {
      $region_data = $this->get_region();
@@ -260,7 +282,7 @@ class DynamicPDFController extends Controller
      <table width="50%" align="center" style="border-collapse: collapse; border: 0px;">
       <tr>
     <th style="border: 1px solid; padding:12px;" width="20%">Region</th>
-    <th style="border: 1px solid; padding:12px;" width="30%">Cantidad de conecciones</th>
+    <th style="border: 1px solid; padding:12px;" width="30%">Cantidad de conexiones</th>
     <th style="border: 1px solid; padding:12px;" width="30%">Total Ventas</th>
    </tr>';  
      foreach($region_data as $reg)
@@ -316,4 +338,42 @@ class DynamicPDFController extends Controller
      return $output;
     }
 
+    function pdf_reparto_diario()
+    {
+     $pdf = \App::make('dompdf.wrapper');
+     $pdf->loadHTML($this->convert_repdiario_to_html());
+     return $pdf->stream('entregas_dia.pdf');
+    }
+
+    //Constructor de contenido del pdf.
+
+    function convert_repdiario_to_html()
+    {
+      $date = Carbon::now();
+      $currentDate = $date->format('d-m-y');
+      $rep_data = $this->get_rep_diario();
+
+     $output = '
+     <h3 align="center">Informe de entregas al día '.$currentDate.'</h3>
+     <table width="50%" align="center" style="border-collapse: collapse; border: 0px;">
+      <tr>
+    <th style="border: 1px solid; padding:12px;" width="20%">Id</th>
+    <th style="border: 1px solid; padding:12px;" width="30%">Nombre</th>
+    <th style="border: 1px solid; padding:12px;" width="30%">Cantidad entregas</th>
+    <th style="border: 1px solid; padding:12px;" width="30%">Total ($)</th>
+   </tr>';  
+     foreach($rep_data as $rep)
+     {
+      $output .= '
+      <tr>
+       <td style="border: 1px solid; padding:12px;">'.$rep->rep_id.'</td>
+       <td style="border: 1px solid; padding:12px;">'.$rep->rep_name.'</td>
+       <td style="border: 1px solid; padding:12px;">'.$rep->cantidad_ventas.'</td>
+       <td style="border: 1px solid; padding:12px;">$'.$rep->total_ventas.'</td>
+      </tr>
+      ';
+     }
+     $output .= '</table>';
+     return $output;
+    }
 }

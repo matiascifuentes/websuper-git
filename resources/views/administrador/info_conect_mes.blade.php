@@ -24,7 +24,7 @@
      <thead>
       <tr>
        <th>Region</th>
-       <th>Cantidad de conecciones</th>
+       <th>Cantidad de conexiones</th>
        <th>Total venta mensual</th>
       </tr>
      </thead>

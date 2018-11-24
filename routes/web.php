@@ -100,7 +100,11 @@ Route::group(['namespace' => 'Administrador', 'middleware' => ['authAdmin'], 'pr
 
 	Route::get('info_reparto_mes', 'DynamicPDFController@index_reparto_mes');
 
+	Route::get('info_reparto_diario', 'DynamicPDFController@index_reparto_diario');
+
 	Route::get('info_reparto_mes/pdfmes', 'DynamicPDFController@pdf_reparto_mes');
+
+	Route::get('info_reparto_diario/pdf_entregadia', 'DynamicPDFController@pdf_reparto_diario');
 
 	Route::get('info_conect_mes', 'DynamicPDFController@index_conect_mes');
 
