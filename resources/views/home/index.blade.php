@@ -11,13 +11,13 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
         <div class="item active">
-            <img src="https://picsum.photos/1200/300/?random" alt="">
+            <img src="{{ asset('img/slide.jpg')}}" alt="">
         </div>
         <div class="item">
-            <img src="https://picsum.photos/1200/300/?random" alt="">
+            <img src="{{ asset('img/slide_2.jpg')}}" alt="">
         </div>
         <div class="item">
-            <img src="https://picsum.photos/1200/300/?random" alt="">
+            <img src="{{ asset('img/slide_3.jpg')}}" alt="">
         </div>
     </div>
 

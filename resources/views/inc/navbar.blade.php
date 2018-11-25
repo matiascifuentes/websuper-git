@@ -6,7 +6,9 @@
       <!-- ADMINISTRDOR -->
         @if(auth()->user()->tipo == 'administrador')
         <div class="navbar-header">
-          <a class="navbar-brand main-title" href="{{ url('/administrador/home') }}">SuperWeb</a>
+          <a class="navbar-brand" href="{{ url('/administrador/home') }}">
+            <img src="{{ asset ('img/superweb.png')}}" alt="">
+          </a>
         </div>
           <ul class="nav navbar-nav">
             <li><a>Bienvenido: {{auth()->user()->email}}</a></li>
@@ -19,16 +21,18 @@
       <!-- CLIENTE -->
         @if(auth()->user()->tipo == 'cliente')
           <div class="navbar-header">
-            <a class="navbar-brand main-title" href="{{ route('home') }}">SuperWeb</a>
+            <a class="navbar-brand" href="{{ route('home') }}">
+              <img alt="Brand" src="{{ asset('img/superweb.png') }}">
+            </a>
           </div>
           <ul class="nav navbar-nav">
             <li><a>Bienvenido: {{auth()->user()->email}}</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ route('cart-show') }}"><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
-            <li><a href="{{ route('top-product') }}">Super Top <span class="glyphicon glyphicon-fire"></span></a></li>
-            <li><a href="{{ route('h-compras') }}">Tus compras</a></li>
-            <li class="active"><a href="{{route('profile')}}">Mi Perfil</a></li>
+            <li><a href="{{route('profile')}}" style="margin-left:10px; margin-right:10px;">Mi Perfil</a></li>
+            <li><a href="{{ route('h-compras') }}" style="margin-left:10px; margin-right:10px;">Mis compras</a></li>
+            <li><a href="{{ route('top-product') }}" style="margin-left:10px; margin-right:10px;"><span class="glyphicon glyphicon-star"></span>Super Top </a></li>
+            <li><a href="{{ route('cart-show') }}"><span class="glyphicon glyphicon-shopping-cart" style="margin-left:10px; margin-right:10px;"></span></a></li>
           @endif
           
             <li><a href="{{route('logout')}}"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
@@ -38,9 +42,11 @@
         <!-- REPARTIDOR -->
           @if(Auth::guard('repartidores')->user()->tipo == 'repartidor')
             <div class="navbar-header">
-              <a class="navbar-brand main-title" href="{{ url('/repartidor') }}">SuperWeb</a>
+              <a class="navbar-brand main-title" href="{{ url('/repartidor') }}">
+                  <img src="{{ asset ('img/superweb.png')}}" alt="">
+              </a>
             </div>
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" style="margin-top: 35px;">
               @if(Auth::guard('repartidores')->user()->disponibilidad == "Disponible")
                 <span class="label label-success">
                   <i class="glyphicon glyphicon-ok-circle"></i>

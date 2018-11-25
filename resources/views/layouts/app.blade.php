@@ -16,7 +16,8 @@
  		@if(\Session::has('message'))
  			@include('inc.message')
  		@endif
- 		@include('inc.navbar')
+    
+        @include('inc.navbar')
 		@yield('content')
 		<!-- Aqui incluir footer  -->
 
