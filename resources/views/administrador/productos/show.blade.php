@@ -2,41 +2,45 @@
 @section('content')
 
 <br>
-<div class="product-info col-sm-4">
-	<div class="container text-center">
-		<div id="products">
-			<div class="product white-panel">
-				<img src="{{ asset($producto->img) }}" width="200" height="200">
-				<p></p>
-				<p>
-					<a class="btn btn-warning" href="{{ route('productos.index') }}">Volver</a>
-				</p>
+<div class="container">
+	<div class="row">
+		<div class="product-info col-sm-3">
+			<div class="container text-center">
+				<div id="products">
+					<div class="product white-panel">
+						<img src="{{ asset($producto->img) }}" width="200" height="200">
+						<p></p>
+						<p>
+							<a class="btn btn-warning" href="{{ route('productos.index') }}">Volver</a>
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
 
-<div class="col-sm-4">
-	<div class="container">
-		<div class="product-block">
-			<h1>{{ $producto->titulo }} </h1>
-			<h1>${{ $producto->precio }}</h1>
-			<h5>Código: {{ $producto->id }}</h5>
-			<h5>Categoría: {{ $producto->categoria }}</h5>
-			<h5>Descripción: {{ $producto->descripcion }}</h5>
+		<div class="col-sm-6">
+				<div class="product-block">
+					<h1>{{ $producto->titulo }} </h1>
+					<h1>${{ $producto->precio }}</h1>
+					<h5>Código: {{ $producto->id }}</h5>
+					<h5>Categoría: {{ $producto->categoria }}</h5>
+					<h5>Descripción: {{ $producto->descripcion }}</h5>
 
+				</div>
 		</div>
+
+		<div class="col-sm-3">
+			<div class="text-center">
+				<hr>
+				<h3>Este producto lo encuentras en </h3>
+				<h1>{{ $producto->supermercado }}</h1>
+				<hr>
+			</div>
+		</div>
+
 	</div>
 </div>
 
-<div >
-	<div class="container text-center col-sm-4">
-		<hr>
-		<h3>Este producto lo encuentras en </h3>
-		<h1>{{ $producto->supermercado }}</h1>
-		<hr>
-	</div>
-</div>
 
 
 
@@ -56,7 +60,7 @@
 
         var options = {
           title: 'Historial de precios',
-          hAxis: {title: 'Fecha',  titleTextStyle: {color: 'red'}, format:"yyyy-MM-dd"},
+          hAxis: {title: 'Fecha',  titleTextStyle: {color: 'black'}, format:"yyyy-MM-dd"},
           vAxis: {minValue: 0, format: ''}
         };
 
