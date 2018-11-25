@@ -18,12 +18,12 @@
     <div class="col-md-8 col-md-offset-2">
       <div class="panel panel-default">
         <div class="panel-body">
-          <div class="pull-left"><h3>Historial de pedidos</h3></div>
+          <div class="pull-left"><h3>Historial de pedidos entregados</h3></div>
           <div class="table-container">
             <table id="mytable" class="table table-borderd table-striped">
               <thead>
-                <th>Informacion Pedido</th>
-                <th>Codigo Pedido</th>
+                <th>Información Pedido</th>
+                <th>Código Pedido</th>
                 <th>Nombre Repartidor</th>
                 <th>Fecha de Compra</th>
                 <th>Fecha de Entrega</th>

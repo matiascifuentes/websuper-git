@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('content')
 
+<div class="alert alert-info">
+	<strong>¡Información!</strong> La búsqueda entrega 10 coincidencias ordenadas desde el precio menor al mayor.
+</div>
+
 <form class="navbar-form navbar-left" role="search" action="{{route('canastas-buscador')}}">
 	<div class="form-group">
 		<input type="text" class="form-control" name='search' placeholder="Buscar productos ..." />

@@ -6,9 +6,14 @@
     {{Session::get('success')}}
   </div>
 @endif
+<div>
+  <span class="glyphicon glyphicon-chevron-left"></span>
+  <a class="btn btn-warning" href="{{url('/administrador/home') }}">Volver</a>
+  <hr>
+</div>
 
   <div class="container">
-   <h3 align="center">Ventas Mensuales por region</h3><br />
+   <h3 align="center">Ventas Mensuales por región</h3><br />
    
    <div class="row">
     <div class="col-md-7" align="right">
@@ -23,7 +28,7 @@
     <table class="table table-striped table-bordered">
      <thead>
       <tr>
-       <th>Region</th>
+       <th>Región</th>
        <th>Cantidad de conexiones</th>
        <th>Total venta mensual</th>
       </tr>

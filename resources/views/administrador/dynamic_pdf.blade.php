@@ -29,7 +29,7 @@
     <table class="table table-striped table-bordered">
      <thead>
       <tr>
-       <th>Id Venta</th>
+       <th>ID Venta</th>
        <th>Total</th>
       </tr>
      </thead>

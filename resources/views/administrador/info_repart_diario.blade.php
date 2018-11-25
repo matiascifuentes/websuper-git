@@ -29,7 +29,7 @@
     <table class="table table-striped table-bordered">
      <thead>
       <tr>
-       <th>Id</th>
+       <th>ID</th>
        <th>Nombre</th>
        <th>Cantidad entregas</th>
        <th>Total</th>

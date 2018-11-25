@@ -6,6 +6,11 @@
     {{Session::get('success')}}
   </div>
 @endif
+<div>
+  <span class="glyphicon glyphicon-chevron-left"></span>
+  <a class="btn btn-warning" href="{{url('/administrador/home') }}">Volver</a>
+  <hr>
+</div>
 
   <div class="container">
    <h3 align="center">Reparto Mensual</h3><br />
@@ -23,7 +28,7 @@
     <table class="table table-striped table-bordered">
      <thead>
       <tr>
-       <th>Id</th>
+       <th>ID</th>
        <th>Nombre</th>
        <th>Cantidad repartos</th>
        <th>Total venta mensual</th>
