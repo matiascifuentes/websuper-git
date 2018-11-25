@@ -27,7 +27,7 @@
 		            <th>Añadir</th>
 	          	</thead>
 	          	<tbody>
-		            @if($productos->count())  
+		            @if(count($productos))  
 		            @foreach($productos as $producto)  
 		            <tr>
 						<td><img src="{{ $producto->img }}"></td>

@@ -11,6 +11,9 @@ use App\Product;
 use App\Canasta;
 use App\DetalleCanasta;
 
+use DB;
+
+
 class CanastasController extends Controller
 {
     /**
@@ -20,8 +23,9 @@ class CanastasController extends Controller
      */
     public function index()
     {
-        //
+        //  Obteniendo los datos de canastas.
         $canastas = Canasta::orderBy('id','ASC')->paginate();
+        //  Enviando los datos a la vista.
         return view('administrador/canastas.index',["canastas"=>$canastas]);
     }
 
@@ -33,9 +37,11 @@ class CanastasController extends Controller
 
     public function create()
     {
-        //
+        //  Obteniendo los productos en el carro de canasta.
         $prodCanasta = \Session::get('prodCanasta');
+        //  Calculando el total.
         $total = $this->total($prodCanasta);
+        //  Enviando los datos al formulario para guardar.
         return view('administrador/canastas.create',["prodCanasta"=>$prodCanasta,"total"=>$total]);
     }
 
@@ -48,21 +54,25 @@ class CanastasController extends Controller
 
     public function store(Request $request)
     {
+        //  Obteniendo los productos en el carro de canasta.
         $prodCanasta = \Session::get('prodCanasta');
         if(!empty($prodCanasta)){
+            //  Creando la canasta con los datos ingresados.
             $canasta = new Canasta;
             $canasta->nombre = $request->input('nombre');
             $canasta->descripcion = $request->input('descripcion');
+            //  Mensajes de error.
             $messages = [
                 'nombre.required' => 'Agrega el nombre de la canasta.',
                 'descripcion.required' => 'Agrega una descripción para la canasta.',
             ];
-
+            //  Validando los datos.
             $this->validate($request,['nombre'=>'required', 'descripcion'=>'required'],$messages);
+            //  Guardando la canasta.
             $canasta->save();
-
+            //  Obteniendo el id con el que se guardó la canasta.
             $id_canasta = $canasta->id;
-        
+            //  Guardando los productos de la canasta en detalle canasta.
             foreach ($prodCanasta as $item) {
                 $detalle = new DetalleCanasta;
                 $detalle->cod_c = $id_canasta;
@@ -70,8 +80,10 @@ class CanastasController extends Controller
                 $detalle->cantidad=$item->cantidad;
                 $detalle->save();
             }
+            //  Limpiando el carro de canasta.
             \Session::forget('prodCanasta');
         }
+        //  Volviendo al index.
         return redirect()->route('canastas.index');
     }
 
@@ -83,11 +95,13 @@ class CanastasController extends Controller
      */
     public function show($id)
     {
-        //
+        //  Obteniendo los datos asociados al id.
         $prodCanasta = DetalleCanasta::where('cod_c',$id)
                         ->join('productos','detalle_canasta.cod_p','=','productos.id')
                         ->get();
+        //  Obteniendo el total de la canasta.
         $total = $this->total($prodCanasta);
+        //  Enviando los datos a la vista.
         return view('administrador/canastas.show',["prodCanasta"=>$prodCanasta,"total"=>$total]);
     }
 
@@ -122,7 +136,7 @@ class CanastasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //  Eliminando la canasta.
         Canasta::destroy($id);
         return redirect()->route('canastas.index')->with('success','Registro eliminado satisfactoriamente');
     }
@@ -130,36 +144,37 @@ class CanastasController extends Controller
 
     public function buscador()
     {
-        $productos = Product::where('titulo', 'like', '%'.Input::get('search').'%')
-                ->orderBy('precio', 'asc')->paginate(10);
+        //  Cadena introducida por el usuario.
+        $cadena = Input::get('search');
+        //  Se separa la cadena en palabras.
+        $palabras = explode(" ",$cadena);
+        $i = 0;
+        //  Recorriendo cada palabra obtenida.
+        foreach ($palabras as $palabra){
+            if($i == 0){
+                $consulta = "SELECT * FROM productos WHERE (titulo ILIKE '%".$palabra."%') ";
+            }
+            //  Agregando una nueva condición a la consulta con la palabra obtenida.
+            $consulta = $consulta."AND (titulo ILIKE '%".$palabra."%') ";
+            $i = $i + 1;
+        }
+        //  Agregando orden y límite a la consulta.
+        $consulta = $consulta."ORDER BY precio ASC LIMIT 10;";
+        //  Ejecutando la consulta.
+        $productos = DB::select($consulta);
+        //  Enviando los datos a la vista.
         return view('administrador/canastas.search',["productos"=>$productos]);
     }
 
-    public function search($search){
-        $search = urldecode($search);
-        $productos = Product::select()
-                ->where('titulo', 'LIKE', '%'.$search.'%')
-                ->orderBy('id', 'desc')
-                ->get();
-        return "hola";
-        /*if (count($productos) == 0){
-            return view('canastas.search')
-            ->with('message', 'No hay resultados que mostrar')
-            ->with('search', $search);
-        } else{
-            return view('canastas.search')
-            ->with('comments', $productos)
-            ->with('search', $search);
-        }*/
-    }
-
-
     private function total($array)
-    {
+    {   
+        //Retorna el total.
         $total = 0;
         foreach ($array as $item) {
+            //  Se agrega al total el subtotal de cada item.
             $total += $item->precio * $item->cantidad;
         }
+        //  Retornando el total.
         return $total;
     }
 }
