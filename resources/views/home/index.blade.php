@@ -55,7 +55,9 @@
 				</div>
 				@endforeach
 			</div>
+            <div class="pagination">
 			{!!$productos->render()!!}
+            </div>
 		</div>
 </div>
 

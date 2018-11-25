@@ -1,8 +1,7 @@
-@pagination-disabled-bg = black;
-
 body{
 	background: silver;
 }
+
 .navbar.navbar-inverse{
   margin-bottom: 5px;
   border-radius: 0px;
@@ -69,38 +68,11 @@ body{
 .pagination>li{
   background-color: black;
 }
+
+.pagination{
+  padding-top: 0px;
+}
 /*Footer*/
-footer
-{
-  background: black;
-  text-align: center;
-  height: 232px;
-}
-
-footer p
-{
-  text-align: justify;
-  font-size: 15px;
-}
-
-ul.redes li
-{
-  display: inline-block;
-}
-
-ul.redes li a
-{
-  color: orange;
-}
-
-.avatar
-{
-  border:5px solid orange;
-  border-radius: 50%;
-  float: left;
-  height: 100px;
-  width: 100px;
-}
 /* Catálogo */
 
 #products {

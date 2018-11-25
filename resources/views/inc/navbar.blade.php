@@ -70,6 +70,11 @@
           @endif
         @else
         <!-- SIN SESIÓN -->
+          <div class="navbar-header">
+              <a class="navbar-brand main-title" href="{{ route('home') }}">
+                  <img src="{{ asset ('img/superweb.png')}}" alt="">
+              </a>
+          </div>
           <ul class="nav navbar-nav navbar-right">
           <li><a href="{{route('register')}}"><span class="glyphicon glyphicon-user"></span>Registrarse</a></li>
           

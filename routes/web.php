@@ -163,6 +163,10 @@ Route::group(['namespace' => 'Administrador', 'middleware' => ['authAdmin'], 'pr
 		'as' => 'h-pedidos',
 		'uses' => 'EntregaController@hpedidos'
 	]);
+	Route::get('hpedidos/{pedido_id}',[
+		'as' => 'det-pedido',
+		'uses' => 'EntregaController@showDetallePedido'
+	]);
 	
 });
 	

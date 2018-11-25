@@ -117,4 +117,11 @@ class EntregaController extends Controller
         return view('administrador.pedidos.hpedidos',["pedidos"=>$pedidos]);
 
     }
+
+    public function showDetallePedido($pedido_id){
+        $detalle_pedidos = Detalle_pedido::where('pedido_id',$pedido_id)
+                            ->join('productos','detalle_pedidos.product_id','=','productos.id')
+                            ->get();
+        return view('administrador/pedidos.show',["detalle_pedido"=>$detalle_pedidos]);
+    }
 }

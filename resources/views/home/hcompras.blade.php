@@ -5,7 +5,7 @@
 	  style="font-size:30px;
 	        color:white;
 	        background:#e76114;">
-	    Historial de Tus Compras
+	    Historial de Mis Compras
 	</div>
 	<div class="panel-body">
 		<div class="table-responsive">

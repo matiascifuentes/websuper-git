@@ -19,9 +19,8 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="pull-left"><h3>Historial de pedidos</h3></div>
-          
           <div class="table-container">
-            <table id="mytable" class="table table-bordred table-striped">
+            <table id="mytable" class="table table-borderd table-striped">
               <thead>
                 <th>Informacion Pedido</th>
                 <th>Codigo Pedido</th>
@@ -32,7 +31,7 @@
               <tbody>
               @foreach($pedidos as $pedido)  
 	              <tr>
-                  <td><a class="btn btn-info btn-xs" href="#"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+                  <td><a class="btn btn-info btn-xs" href="{{route('det-pedido',$pedido->pedido_id) }}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
                 	<td>{{$pedido->pedido_id}}</td>
                   <td>{{$pedido->name}}</td>
                   <td>{{$pedido->created_at}}</td>
