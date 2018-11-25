@@ -57,7 +57,8 @@ class DynamicPDFController extends Controller
     {
      $pdf = \App::make('dompdf.wrapper');
      $pdf->loadHTML($this->convert_pedido_data_to_html());
-     return $pdf->stream('ventas_diario.pdf');
+     $date = Carbon::now();
+     return $pdf->stream('Ventas_diarias_'.$date.'.pdf');
     }
 
     //Constructor de contenido del pdf.
@@ -150,7 +151,8 @@ class DynamicPDFController extends Controller
     {
      $pdf = \App::make('dompdf.wrapper');
      $pdf->loadHTML($this->convert_vmes_to_html());
-     return $pdf->stream('ventas_mes.pdf'); 
+     $date = Carbon::now();
+     return $pdf->stream('Ventas_mensuales_'.$date.'pdf'); 
     }
 
     //Constructor de contenido del pdf   
@@ -209,7 +211,7 @@ class DynamicPDFController extends Controller
       FROM repartidores r, entrega e, pedidos p
       WHERE r.id = e.repartidor_id
       AND e.pedido_id = p.id
-      AND EXTRACT(MONTH FROM e.created_at) = (SELECT EXTRACT(month FROM CURRENT_DATE))
+      AND EXTRACT(MONTH FROM e.updated_at) = (SELECT EXTRACT(month FROM CURRENT_DATE))
       GROUP BY e.repartidor_id, r.name");
 
      return $repartidores;
@@ -222,7 +224,7 @@ class DynamicPDFController extends Controller
       FROM repartidores r, entrega e, pedidos p
       WHERE r.id = e.repartidor_id
       AND e.pedido_id = p.id
-      AND e.created_at >= current_date
+      AND e.updated_at >= current_date
       GROUP BY e.repartidor_id, r.name");
 
      return $repartidores;
@@ -269,7 +271,8 @@ class DynamicPDFController extends Controller
     {
      $pdf = \App::make('dompdf.wrapper');
      $pdf->loadHTML($this->convert_region_to_html());
-     return $pdf->stream('ventas_region.pdf');
+     $date = Carbon::now();
+     return $pdf->stream('Ventas_region_'.$date.'.pdf');
     }
     function convert_region_to_html()
     {
@@ -303,7 +306,8 @@ class DynamicPDFController extends Controller
     {
      $pdf = \App::make('dompdf.wrapper');
      $pdf->loadHTML($this->convert_repmes_to_html());
-     return $pdf->stream('ventas_diario.pdf');
+     $date = Carbon::now();
+     return $pdf->stream('Entregas_mensuales_'.$date.'.pdf');
     }
 
     //Constructor de contenido del pdf.
@@ -342,7 +346,8 @@ class DynamicPDFController extends Controller
     {
      $pdf = \App::make('dompdf.wrapper');
      $pdf->loadHTML($this->convert_repdiario_to_html());
-     return $pdf->stream('entregas_dia.pdf');
+     $date = Carbon::now();
+     return $pdf->stream('Entregas_diarias_'.$date.'.pdf');
     }
 
     //Constructor de contenido del pdf.

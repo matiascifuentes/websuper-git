@@ -23,19 +23,17 @@
           <div class="table-container">
             <table id="mytable" class="table table-bordred table-striped">
               <thead>
-                <th>informacion pedido</th>
-                <th>Codigo</th>
-                <th>Pedido</th>
-                <th>Id_Repartidor</th>
+                <th>Información pedido</th>
+                <th>Código pedido</th>
+                <th>ID Repartidor</th>
                 <th>Estado</th>
-                <th>ip</th>
+                <th>IP</th>
               </thead>
               <tbody>
               @if($entregas->count())  
               @foreach($entregas as $entrega)  
 	              <tr>
                   <td><a class="btn btn-info btn-xs" href="{{route('entrega.show', $entrega->pedido_id)}}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
-                	<td>{{$entrega->id}}</td>
                   <td>{{$entrega->pedido_id}}</td>
                   <td>{{$entrega->repartidor_id}}</td>
                   <td>{{$entrega->estado}}</td>

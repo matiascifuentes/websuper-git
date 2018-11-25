@@ -117,7 +117,7 @@
 							                <i class="fa fa-truck fa-5x"></i>
 							              </div>
 							              <div class="col-xs-6 text-right">
-							                <p class="announcement-text">Entregas</p>
+							                <p class="announcement-text">Entregas pendientes</p>
 							              </div>
 							            </div>
 							          </div>
@@ -170,7 +170,7 @@
 							                <i class="fa fa-list-alt fa-5x"></i>
 							              </div>
 							              <div class="col-xs-6 text-right">
-							                <p class="announcement-text">Pedidos</p>
+							                <p class="announcement-text">Pedidos entregados</p>
 							              </div>
 							            </div>
 							          </div>
