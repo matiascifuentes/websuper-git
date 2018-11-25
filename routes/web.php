@@ -4,7 +4,7 @@ Route::redirect('/','home');
 Route::get('/',[
 	'as'=>'home',
 	'uses'=>'HomeController@index'
-]);
+])->middleware('authCliente');
 
 Route::resource('home','HomeController')->middleware('authCliente');
 
