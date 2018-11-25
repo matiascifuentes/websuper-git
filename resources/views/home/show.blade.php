@@ -9,7 +9,7 @@
 				<img src="{{ asset($producto->img) }}" width="200" height="200">
 				<p></p>
 				<p>
-					<a class="btn btn-warning" style="margin-bottom::;px;" href="{{ route('cart-add', $producto->id) }}">Agregar</a>
+					<a class="btn btn-warning" style="margin-bottom:9px;" href="{{ route('cart-add', $producto->id) }}">Agregar</a>
 				</p>
 			</div>
 		</div>

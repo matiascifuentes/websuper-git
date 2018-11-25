@@ -1,21 +1,25 @@
 @extends('layouts.app')
 @section('content')
+<div class="panel-heading text-center" 
+	  style="font-size:30px;
+	        color:white;
+	        background:#e76114;
+	        margin-bottom:20px;">
+	    Top Productos Mas Vendidos
+	</div>
 	<div class="container text-center">
-		<div class="page header">
-			<h1>Top Productos Mas Vendidos</h1>
-		</div>
 		<div class="page">
 			<div class="table-responsive">
 				<table class="table table-striped table-hover table-bordered">
 					<tr>
-						<th>Rank</th>	
-						<th>Producto</th>
-						<th>Precio</th>
-						<th>Categoria</th>
-						<th>Supermercado</th>
-						<th>Total Vendidos</th>
-						<th>Ver</th>
-						<th>Agregar</th>
+						<th style="text-align:center">Rank</th>	
+						<th style="text-align:center">Producto</th>
+						<th style="text-align:center">Precio</th>
+						<th style="text-align:center">Categoria</th>
+						<th style="text-align:center">Supermercado</th>
+						<th style="text-align:center">Total Vendidos</th>
+						<th style="text-align:center">Ver</th>
+						<th style="text-align:center">Agregar</th>
 					</tr>
 					<?php $a = 1?>
 					@foreach($tops as $item)
