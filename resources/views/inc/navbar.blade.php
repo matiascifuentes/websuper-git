@@ -31,8 +31,8 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{{route('profile')}}" style="margin-left:10px; margin-right:10px;">Mi Perfil</a></li>
             <li><a href="{{ route('h-compras') }}" style="margin-left:10px; margin-right:10px;">Mis compras</a></li>
-            <li><a href="{{ route('top-product') }}" style="margin-left:10px; margin-right:10px;"><span class="glyphicon glyphicon-star"></span>Super Top </a></li>
-            <li><a href="{{ route('canastas-cliente') }}" style="margin-left:10px; margin-right:10px;"><span class="glyphicon glyphicon-list-alt"></span>Canastas </a></li>
+            <li><a href="{{ route('top-product') }}" style="margin-left:10px; margin-right:10px;"><span class="glyphicon glyphicon-star"></span> Super Top </a></li>
+            <li><a href="{{ route('canastas-cliente') }}" style="margin-left:10px; margin-right:10px;"><span class="glyphicon glyphicon-list-alt"></span> Canastas </a></li>
             <li><a href="{{ route('cart-show') }}"><span class="glyphicon glyphicon-shopping-cart" style="margin-left:10px; margin-right:10px;"></span></a></li>
           @endif
           
@@ -65,7 +65,6 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ url('/repartidor') }}">Entregas</a></li>
-              <li><a href="#">Mi Perfil</a></li>
               <li><a href="{{ route('h-entregados') }}">Mis Entregados</a></li>
               <li><a href="{{url('repartidores/logout')}}"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
           @endif
