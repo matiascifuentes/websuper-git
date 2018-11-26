@@ -76,6 +76,22 @@ Route::group(['middleware' => ['authCliente']], function()
 		'uses'=>'TopController@showCompras'
 	]);
 
+	//Canastas
+	Route::get('canastasCliente',[
+		'as' => 'canastas-cliente',
+		'uses' => 'CanastasClienteController@indexCanastas'
+	]);
+
+	Route::get('canastasCliente/{id}',[
+		'as' => 'show-canasta',
+		'uses' => 'CanastasClienteController@showCanasta'
+	]);
+
+	Route::get('canastasCliente/add/{id}',[
+		'as' => 'canasta-add',
+		'uses' => 'CanastasClienteController@add'
+	]);
+
 });
 
 //Fin Cliente-------------------------------------------------------------------------------------------------
