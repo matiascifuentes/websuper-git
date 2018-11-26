@@ -23,8 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //
+        //  Obteniendo todos los productos.
         $productos = Product::orderBy('id','ASC')->paginate();
+        //  Enviando los productos a la vista del cliente.
         return view('home.index',["productos"=>$productos]);
     }
 
@@ -56,10 +57,19 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    { 
+        if(!is_numeric($id)){
+            //  Si el id no es un número(ingreso indebido por url), se redirige al home.
+            return redirect('/home');
+        }
+        //  Obteniendo datos del producto.
         $producto = Product::where('id',$id)->first();
         $historial = Historial::where('id_prod',$id)->get(['fecha','precio']);
+        if(!$producto){
+            //  Si no hay resultados no existe el producto y se envia al home.
+            return redirect('/home');
+        }
+        //  Enviando los datos a la vista.
         return view('home.show',["producto"=>$producto,"historial"=>$historial]);
     }
 
