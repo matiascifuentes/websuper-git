@@ -20,6 +20,7 @@
         @include('inc.navbar')
 		@yield('content')
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="{{ asset('js/pinterest_grid.js') }}"></script>
 		<script src="{{ asset('js/main.js') }}"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
