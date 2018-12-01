@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class UsersController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Mostrar el formulario para editar datos de usuario.
      *
      * @return \Illuminate\Http\Response
      */
@@ -31,14 +31,14 @@ class UsersController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guardar los datos del usuario en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        //  Validando los datos ingresados al formulario.
          $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'region' => 'required',
@@ -46,14 +46,10 @@ class UsersController extends Controller
             'address' => 'required|string|min:4',
             'phone' => 'required|string|min:8|max:12',
         ]);
+        //  Asignando los datos a una variable.
         $data = $request->all();
-
-        // if($data['password'] != null) 
-        //     $data['password'] = bcrypt($data['password']);
-        // else
-        //     unset($data['password']);
-
-       $update=auth()->user()->update($data);
+        //  Actualizando los datos del usuario logeado.
+        $update=auth()->user()->update($data);
 
         if($update)
             return redirect()->route('profile')->with('success', 'Éxito al actualizar');

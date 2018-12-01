@@ -13,19 +13,20 @@ use App\Historial;
 class repartidorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Mostrar el index de CRUD repartidores.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        //  Obteniendo los datos de repartidores.
         $repartidor = repartidor::orderBy('id','ASC')->paginate();
         return view('administrador/repartidores.index',["repartidores"=>$repartidor]);
   //
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Mostrar el formulario de nuevo repartidor.
      *
      * @return \Illuminate\Http\Response
      */
@@ -36,14 +37,16 @@ class repartidorController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guardar un nuevo repartidor en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        //  Creando nuevo repartidor.
         $repartidor = new repartidor;
+        //  Obteniendo datos desde el formulario.
         $repartidor->name = $request->input('name');
         $repartidor->edad = $request->input('edad');
         $repartidor->direccion = $request->input('direccion');
@@ -57,6 +60,7 @@ class repartidorController extends Controller
         $repartidor->password = Hash::make($request->input('password'));
         $repartidor->tipo = 'repartidor';
 
+        //  Mensajes de error.
         $messages = [
             'edad.required' => 'Agrega La edad del repartidor.',
             'edad.min' => 'La edad debe ser mayor o igual a 18',
@@ -72,42 +76,42 @@ class repartidorController extends Controller
             'password.confirmed' => 'La contraseña no coincide con la confirmación'
             
         ];
+        //  Validando los datos ingresados.
         $this->validate($request,['edad'=>'required|numeric|integer|min:18', 'direccion'=>'required', 'fecha_ingreso'=>'required', 'situacion'=>'required', 'disponibilidad'=>'required','email' => 'required|string|email|max:255|unique:repartidores',
             'password' => 'required|string|min:6|confirmed',],$messages);
-        
+        //  Guardando los datos.
         $repartidor->save();
         return redirect()->route('repartidores.index')->with('success','Registro creado satisfactoriamente');
-        //
     }
 
     /**
-     * Display the specified resource.
+     * Mostrar los datos de un repartidor.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-         $repartidor = repartidor::where('id',$id)->first();
-         return view('administrador/repartidores.show',["repartidores"=>$repartidor]);
-        //
+        //  Obteniendo los datos del repartidor.
+        $repartidor = repartidor::where('id',$id)->first();
+        return view('administrador/repartidores.show',["repartidores"=>$repartidor]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Mostrar el formulario para editar un repartidor.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
+        //  Obteniendo los datos actuales del repartidor.
         $repartidor=repartidor::find($id);
         return view('administrador/repartidores.edit',["repartidor"=>$repartidor]);
-        //
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizar un repartidor en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -115,7 +119,9 @@ class repartidorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //  Obteniendo datos actuales del repartidor.
         $repartidor = repartidor::find($id);
+        //  Cambiando datos antiguos por nuevos.
         $repartidor->name = $request->input('name');
         $repartidor->edad = $request->input('edad');
         $repartidor->direccion = $request->input('direccion');
@@ -124,7 +130,7 @@ class repartidorController extends Controller
         if ($repartidor->situacion == "Inactivo") {
             $repartidor->disponibilidad = "No disponible";
         }
-
+        //  Mensajes de error.
         $messages = [
             'edad.required' => 'Agrega La edad del repartidor.',
             'edad.min' => 'La edad debe ser mayor o igual a 18',
@@ -137,24 +143,24 @@ class repartidorController extends Controller
             'email.unique' => 'El e-mail ya está en uso por otro usuario',
             
         ];
+        //  Validando los datos.
         $this->validate($request,[ 'name'=>'required', 'edad'=>'required|numeric|integer|min:18', 'direccion'=>'required', 'fecha_ingreso'=>'required', 'situacion'=>'required'],$messages);
-        
+        //  Guardando los nuevos datos.
         $repartidor->save();
         return redirect()->route('repartidores.index')->with('success','Registro actualizado satisfactoriamente');
         //
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar un repartidor de la base de datos.
      *  
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
+        //  Eliminando repartidor.
         repartidor::destroy($id);
-
         return redirect()->route('repartidores.index')->with('success','Registro eliminado satisfactoriamente');
-        //
     }
 }

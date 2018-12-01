@@ -10,18 +10,32 @@ class RepartidorLoginController extends Controller
 {
     use AuthenticatesUsers;
     
+    /**
+     * Crear sesion login para repartidores.
+     *
+     */
     protected function guard()
     {
     	// Asignando un guardia a la sesión del repartidor.
     	return Auth::guard('repartidores');
     }
 
+    /**
+     * Mostrar el formulario de login repartidor.
+     *
+     * @return \Illuminate\Http\Response
+     */
     function showLoginForm()
     {
     	//	Mostrar el login de repartidor.
     	return view('repartidores/login');
     }
 
+    /**
+     * Redireccionar segun la situacion del repartidor.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function authenticated()
     {
     	//	Luego de autenticar al usuario se le redirige a su vista.
@@ -36,6 +50,11 @@ class RepartidorLoginController extends Controller
         }
     }
 
+    /**
+     * Cerrar sesion repartidor.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function logout () {
         //	Cerrando sesión.
         Auth::guard('repartidores')->logout();

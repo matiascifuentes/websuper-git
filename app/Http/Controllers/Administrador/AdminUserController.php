@@ -9,7 +9,7 @@ use App\User;
 class AdminUserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra el index de CRUD de usuarios.
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,7 +41,7 @@ class AdminUserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Muestra los datos de un usuario.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -53,15 +53,21 @@ class AdminUserController extends Controller
         return view('administrador/adminuser.show',["usuario"=>$usuario]);
     }
 
+    /**
+     * Muestra el formulario para editar a un usuario.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
-        //
+        //  Obteniendo los datos del usuario.
         $usuarios=User::find($id);
         return view('administrador/adminuser.edit',["usuarios"=>$usuarios]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizar los datos de un usuario en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -69,29 +75,11 @@ class AdminUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //   Obteniendo los datos actuales del usuario.
         $usuarios = User::find($id);
+        //   Cambiando los datos antiguos por los nuevos.
         $usuarios->tipo = $request->input('tipo');
-
-
-        // $messages = [
-        //     'nombre.required' => 'Agrega el nombre del producto.',
-        //     'precio.required' => 'Agrega el precio del producto.',
-        //     'precio.min' => 'El precio debe ser mayor o igual a 1',
-        //     'precio.numeric' => 'El precio debe ser un valor numérico',
-        //     'precio.integer' => 'El precio debe ser un número entero',
-        //     'categoria.required' => 'Agrega la categoría del producto.',
-        //     'descripcion.required' => 'Agrega una descripción del producto.',
-        //     'supermercado.required' => 'Agrega el supermercado al cual pertenece el producto.',
-        //     'img.required' => 'Agrega una imagen al producto.',
-        //     'url.required' => 'Agrega una url al producto.',
-            
-        // ];
-        
-
-        // $this->validate($request,[ 'nombre'=>'required', 'precio'=>'required|numeric|integer|min:1', 'categoria'=>'required', 'descripcion'=>'required', 'supermercado'=>'required', 'img'=>'required', 'url'=>'required'],$messages);
-
-
+        //   Guardando los cambios.
         $usuarios->save();
         return redirect()->route('usuarios.index')->with('success','Registro actualizado satisfactoriamente');
     }

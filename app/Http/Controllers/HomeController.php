@@ -11,13 +11,17 @@ use App\Historial;
 
 class HomeController extends Controller
 {
-
-     public function __construct()
+    /**
+     * Constructor que asigna middleware de seguridad.
+     *
+     */
+    public function __construct()
     {
         $this->middleware('auth');
     }
+
     /**
-     * Display a listing of the resource.
+     * Mostrar el index de cliente.
      *
      * @return \Illuminate\Http\Response
      */
@@ -51,7 +55,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Mostrar el detalle de un producto.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

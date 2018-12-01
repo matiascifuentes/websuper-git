@@ -16,7 +16,7 @@ use App\Pedido;
 class HomeRepartidorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Mostrar el index del repartidor.
      *
      * @return \Illuminate\Http\Response
      */
@@ -48,15 +48,13 @@ class HomeRepartidorController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Mostrar las entregas en curso.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show()
     {
-        //  Función para mostrar tabla con entregas en curso.
-
         //  Obteniendo las entregas asignadas al repartidor.
         $id = Auth::guard('repartidores')->user()->id;
         $entregas = Entrega::where('repartidor_id',$id)
@@ -80,7 +78,7 @@ class HomeRepartidorController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizar la disponibilidad del repartidor en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -88,8 +86,6 @@ class HomeRepartidorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //  Función para actualizar la disponibilidad del repartidor.
-
         //  Obteniendo la disponibilidad actual.
         $repartidor = repartidor::find($id);
         //  Reemplazando con la nueva disponibilidad.
@@ -110,10 +106,14 @@ class HomeRepartidorController extends Controller
         //
     }
 
+    /**
+     * Mostrar el detalle de un pedido.
+     *
+     * @param  int  $pedido_id
+     * @return \Illuminate\Http\Response
+     */
     public function showPedido($pedido_id)
     {
-        //  Función para mostrar los productos que deben ser entregados.
-
         //  Obteniendo el detalle del pedido.
         $detalle_pedido = Detalle_pedido::where('pedido_id',$pedido_id)
                             ->join('productos','detalle_pedidos.product_id','=','productos.id')
@@ -127,10 +127,14 @@ class HomeRepartidorController extends Controller
         return view('repartidor.detalleEntrega',["detalle_pedido"=>$detalle_pedido , "total"=>$total]);
     }
 
+    /**
+     * Actualizar el estado de una entrega.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function updateEntrega($pedido_id)
     {
-        //  Función para actualizar el estado de la entrega.
-
         //  Obteniendo los datos actuales.
         $entrega = Entrega::find($pedido_id);
         //  Reemplazando con el nuevo estado.
@@ -140,9 +144,17 @@ class HomeRepartidorController extends Controller
         return redirect()->route('repartidor.index');
     }
 
+    /**
+     * Mostrar el historial de entregas realizadas por un repartidor.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function hentregas()
     {
+        //  Obteniendo el id del repartidor logeado.
         $id = Auth::guard('repartidores')->user()->id;
+        //  Obteniendo las entregas realizadas por el repartidor.
         $entregas = Entrega::where('repartidor_id',$id)
                             ->where('estado','Entregado')
                             ->orderBy('updated_at','DESC')

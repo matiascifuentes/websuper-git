@@ -12,7 +12,7 @@ use App\Historial;
 class ProductosController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Mostrar el index de CRUD productos.
      *
      * @return \Illuminate\Http\Response
      */
@@ -25,7 +25,7 @@ class ProductosController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Mostrar el formulario de nuevo producto.
      *
      * @return \Illuminate\Http\Response
      */
@@ -36,7 +36,7 @@ class ProductosController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guardar un nuevo producto en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -78,7 +78,7 @@ class ProductosController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Mostrar los datos de un producto.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -93,7 +93,7 @@ class ProductosController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Mostrar el formulario para editar un producto.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -106,7 +106,7 @@ class ProductosController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizar un producto en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -149,7 +149,7 @@ class ProductosController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar un producto en la base de datos.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -158,7 +158,6 @@ class ProductosController extends Controller
     {
         //  Eliminando los datos del producto.
         Product::destroy($id);
-
         return redirect()->route('productos.index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

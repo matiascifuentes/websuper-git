@@ -37,7 +37,6 @@
                 <th>Supermercado</th>
                 <th>Url</th>
                 <th>Editar</th>
-                <th>Eliminar</th>
               </thead>
               <tbody>
               @if($productos->count())  
@@ -52,13 +51,6 @@
                   <td>{{$producto->supermercado}}</td>
                   <td><a class="btn btn-primary btn-xs" href="{{url($producto->url)}}" target="_blank"><span class="fa fa-external-link"></span></a></td>
 	                <td><a class="btn btn-primary btn-xs" href="{{route('productos.edit', $producto->id)}}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-	                <td>
-	                  <form action="{{route('productos.destroy', $producto->id)}}" method="post">
-	                   {{csrf_field()}}
-	                   <input name="_method" type="hidden" value="DELETE">
-	                   <button class="btn btn-danger btn-xs" onclick="return confirm ('Confirmar eliminación de registro')"><span class="glyphicon glyphicon-trash"></span></button>
-                    </form>
-                  </td>
 	              </tr>
                 @endforeach 
                 @else

@@ -16,13 +16,13 @@ use DB;
 class EntregaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra el index de entregas activas.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        //  Obteniendo todas las entregas activas.
         $entrega = entrega::where('estado','Activo')
                         ->join('pedidos','entrega.pedido_id','=','pedidos.id')
                         ->get();
@@ -55,14 +55,14 @@ class EntregaController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Muestra el detalle de una entrega.
      *
-     * @param  int  $id
+     * @param  int  $pedido_id
      * @return \Illuminate\Http\Response
      */
     public function show($pedido_id)
     {
-        //
+        //  Obteniendo el detalle del pedido.
         $detalle_pedidos = Detalle_pedido::where('pedido_id',$pedido_id)
                             ->join('productos','detalle_pedidos.product_id','=','productos.id')
                             ->get();
@@ -103,8 +103,14 @@ class EntregaController extends Controller
         //
     }
 
+    /**
+     * Muestra el index de entregas realizadas.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function hpedidos(){
 
+        //  Obteniendo las entregas realizadas.
         $pedidos = DB::select("SELECT entrega.pedido_id, 
                                 repartidores.name, 
                                 entrega.created_at, 
@@ -115,10 +121,16 @@ class EntregaController extends Controller
                                 WHERE entrega.estado  = 'Entregado';");
 
         return view('administrador.pedidos.hpedidos',["pedidos"=>$pedidos]);
-
     }
 
+    /**
+     * Mostrar el detalle de una entrega realizada.
+     *
+     * @param  int  $pedido_id
+     * @return \Illuminate\Http\Response
+     */
     public function showDetallePedido($pedido_id){
+        //  Obteniendo el detalle de una entrega.
         $detalle_pedidos = Detalle_pedido::where('pedido_id',$pedido_id)
                             ->join('productos','detalle_pedidos.product_id','=','productos.id')
                             ->get();

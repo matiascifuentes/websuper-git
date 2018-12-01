@@ -17,7 +17,7 @@ use DB;
 class CanastasController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra el index de CRUD de canastas.
      *
      * @return \Illuminate\Http\Response
      */
@@ -30,7 +30,7 @@ class CanastasController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Mostrar formulario de nueva canasta.
      *
      * @return \Illuminate\Http\Response
      */
@@ -46,7 +46,7 @@ class CanastasController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guardar una nueva canasta en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -88,7 +88,7 @@ class CanastasController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Mostrar los datos de una canasta.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -129,7 +129,7 @@ class CanastasController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar una canasta de la base de datos.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -141,7 +141,10 @@ class CanastasController extends Controller
         return redirect()->route('canastas.index')->with('success','Registro eliminado satisfactoriamente');
     }
 
-
+    /**
+     * Busca productos a partir de una cadena de texto.
+     *
+     */
     public function buscador()
     {
         //  Cadena introducida por el usuario.
@@ -151,6 +154,7 @@ class CanastasController extends Controller
         $i = 0;
         //  Recorriendo cada palabra obtenida.
         foreach ($palabras as $palabra){
+            //  Armando la consulta en una variable.
             if($i == 0){
                 $consulta = "SELECT * FROM productos WHERE (titulo ILIKE '%".$palabra."%') ";
             }
@@ -166,6 +170,12 @@ class CanastasController extends Controller
         return view('administrador/canastas.search',["productos"=>$productos]);
     }
 
+    /**
+     * Recibe un array de productos y retorna el precio total.
+     *
+     * @param  array  $array
+     * @return int $total
+     */
     private function total($array)
     {   
         //Retorna el total.

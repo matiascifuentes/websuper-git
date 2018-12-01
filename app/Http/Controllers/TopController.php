@@ -12,8 +12,14 @@ use DB;
 
 class TopController extends Controller
 {
+    /**
+     * Mostrar el top de productos mas vendidos.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function showTop()
     {
+        //  Obteniendo los productos mas vendidos.
     	$tops = DB::select('SELECT productos.titulo,
     							productos.precio,
     							productos.supermercado,
@@ -30,9 +36,17 @@ class TopController extends Controller
 								ORDER BY totalventas DESC;');
     	return view('home.top', compact('tops'));
     }
+
+    /**
+     * Mostrar el historial de compras del cliente.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function showCompras()
     {
+        //  Obteniendo el id asociado al usuario logeado.
         $id = auth()->user()->id;
+        //  Obteniendo datos de compras realizadas por el cliente.
         $pedidos = Pedido::where('user_id',$id)
                             ->orderBy('created_at','DESC')
                             ->get();
